@@ -12,25 +12,25 @@ Modeling techniques related to users and roles are out-of-scope in this project,
 
 ### Application Logic
 It is not an anonymous site: To use it, you must be a registered user.
-figure 1.
+![image](https://github.com/Xx-william/JEE-Course/blob/master/Screen%20Shots/figure1.jpg)
 
 **Owner** are allowed to create project ideas, add relevant documentation and check thr project acceptability.
-figure2
+![image](https://github.com/Xx-william/JEE-Course/blob/master/Screen%20Shots/figure2.jpg)
 
 When the **Owner** starts a new idea, he or she must provide basic information about the project such as acronym, description, and budget.
-figure3
+![image](https://github.com/Xx-william/JEE-Course/blob/master/Screen%20Shots/figure3.jpg)
 
 **Owner** are allwed to view only their projects and related statistics of each project(i.e. eht average attractiveness, the average risk level and the number of evaluators.
-figure 4
+![image](https://github.com/Xx-william/JEE-Course/blob/master/Screen%20Shots/figure4.jpg)
 
 At any time, the project owner can attach documents related to the project (summaries, images, videos, etc.) to draw the attention of evaluators.
-figure5
+![image](https://github.com/Xx-william/JEE-Course/blob/master/Screen%20Shots/figure5.jpg)
 
 **Evaluator** cannot create project ideas. However, they have access to all projects registered in the application.
-figure 6
+![image](https://github.com/Xx-william/JEE-Course/blob/master/Screen%20Shots/figure6.jpg)
 
 The **Evaluator** chooses a project from the list and assigns a numeric value to two dimensions of the proposal. Attractiveness and risk level are numeric values that range from 1 to 5. For attractiveness, 1 is the lowest attractive project, and 5 is the most attractive project. The same rule is applied for risk level: 1 is the lowest perceived risk and 5 is the biggest perceived risk. For the sake of simplicity, **Evaluator** cannot change, or remove their evaluations.
-
+![image](https://github.com/Xx-william/JEE-Course/blob/master/Screen%20Shots/figure7.jpg)
 ### Tech
 In this project, we will use
 
