@@ -9,7 +9,8 @@
 		<div class="panel panel-primary">
 			<div class="panel-body"></div>
 			<div class="panel-footer">
-				<form id="signUpForm" method="post" data-toggle="validator" role="from">
+				<form id="signUpForm" method="post" data-toggle="validator"
+					role="from">
 					<div class="form-group">
 						<label for="inputEmail" class="control-label">E-Mail</label> <input
 							type="email" class="form-control id="
@@ -23,57 +24,60 @@
 					<div class="form-group">
 						<label for="inputPassword" class="control-label">Password</label>
 						<div class="form-group ">
-							<input type="password"  class="form-control"
-								id="inputPassword" placeholder="Password" name="password"
-								required>
+							<input type="password" class="form-control" id="inputPassword"
+								placeholder="Password" name="password" required>
 							<div class="help-block">Minimum of 6 characters</div>
 						</div>
 						<div class="form-group ">
-							<label for="inputPassword" class="control-label">Password confirm</label>
-
-							<input type="password" class="form-control"
-								id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Whoops, these don't match"
+							<label for="inputPassword" class="control-label">Password
+								confirm</label> <input type="password" class="form-control"
+								id="inputPasswordConfirm" data-match="#inputPassword"
+								data-match-error="Whoops, these don't match"
 								placeholder="Confirm" name="passwordVerify" required>
 							<div class="help-block with-errors"></div>
 						</div>
 					</div>
+					<div class="form-group">
+						<label for="radio" class="control-label">User Type</label>
+						<div class="radio">
+							<label class="radio-inline" class="control-label"><input
+								type="radio" name="optradio" value="Owner" required>Owner</label>
+							<label class="radio-inline" class="control-label"><input
+								type="radio" name="optradio" value="Evaluator" required>Evaluator</label>
+						</div>
 
-					<label class="radio-inline" class="control-label"><input
-						type="radio" name="optradio" value="Owner" required>Owner</label>
-					<label class="radio-inline" class="control-label"><input
-						type="radio" name="optradio" value="Evaluator" required>Evaluator</label>
 
+					</div>
 					<center>
-						<input id="formSubmit" class="btn btn-default" value="Sign Up" type="submit">
+						<button id="formSubmit" class="btn btn-default" type="submit">Sign Up</button>
 				</form>
 				</center>
 				<div id="ajaxResponse"></div>
-			<script>
-				
-				   $("#signUpForm").submit(function(e){
-					   var form = $('#signUpForm');
-					$.ajax({
-						type: "POST",
-						url: "/ProjectFarm/controller/SignUp",
-						data: form.serialize(),
-						success: function(data){
-							if(data.isSuccess == "false"){
-								
-								$("#ajaxResponse").append("<div class='alert alert-danger' role='alert'>"+ data.errorMessage +"</div>");
-							}else if(data.isSuccess == "true"){
-								$("#ajaxResponse").append("<div class='alert alert-success' role='alert'>Welcome to Project Farm</div>");
-							}
-																				
-						},
-						error: function(){
-							$("#ajaxResponse").append("<h1>fails</h1>");
-							
-						}
-					});	
-					return false;
-				});
-			
-			</script>
+				<script>
+				$('#signUpForm').validator().on('submit', function (e) {
+					  if (e.isDefaultPrevented()) {
+					    // handle the invalid form...
+					  } else {
+						  var form = $('#signUpForm');
+							$.ajax({type : "POST",
+								url : "/ProjectFarm/controller/SignUp",
+								data : form.serialize(),
+								success : function(data) {
+								if (data.isSuccess == "false") {
+									$("#ajaxResponse").append("<div class='alert alert-danger' role='alert'>"
+										+ data.errorMessage + "</div>");
+								} else if (data.isSuccess == "true") {
+									$("#ajaxResponse").append("<div class='alert alert-success' role='alert'>Welcome to Project Farm</div>");
+									}
+								},
+								error : function() {
+										$("#ajaxResponse").append("<h1>fails</h1>");
+										}
+							});
+							return false;
+					  }
+					})					
+				</script>
 			</div>
 		</div>
 	</div>
