@@ -8,7 +8,6 @@ public abstract class User implements Serializable {
 
 	private String email;
 	private String name;
-
 	private String password;
 
 	public User(String email, String name, String password) {
