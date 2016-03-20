@@ -10,15 +10,15 @@
 			<div class="panel-body"></div>
 			<div class="panel-footer">
 				<form id="signUpForm" method="post" data-toggle="validator"
-					role="from">
+					role="form">
 					<div class="form-group">
 						<label for="inputEmail" class="control-label">E-Mail</label> <input
-							type="email" class="form-control id="
+							type="email" class="form-control " id=
 							inputEmail" placeholder="E-mail" name="email" required>
 					</div>
 					<div class="form-group">
 						<label for="inputUserName" class="control-label">Name</label> <input
-							type="text" class="form-control id="
+							type="text" class="form-control" id=
 							inputUserName" placeholder="Name" name="userName" required>
 					</div>
 					<div class="form-group">

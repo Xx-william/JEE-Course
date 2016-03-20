@@ -18,6 +18,7 @@ public class ProjectDB {
 	}
 
 	public static void saveProject(Project project) throws DatabaseAccessError {
+		
 		projects.put(project.getAcronym(), project);
 	}
 

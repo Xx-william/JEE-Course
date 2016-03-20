@@ -1,5 +1,8 @@
 package model.db;
-
+/**
+ * @author WANG Xi
+ * @version 1.0
+ */
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +21,7 @@ import model.exception.InvalidDataException;
 public class UserDB {
 	private static String SEARCH_USER = "SELECT * FROM user WHERE user_Email = ?";
 	private static String ADDUSER = "INSERT INTO user(user_Name,user_Email,user_Password,user_Type) VALUES(?,?,?,?) ";
+	private static String GET_USERWITHPASS = "SELECT * FROM user WHERE user_Email = ? AND user_Password = ?";
 	// private static Map<String,User> users;
 	//
 	// static {
@@ -25,6 +29,50 @@ public class UserDB {
 	// initializeUsersList();
 	// }
 
+   /**
+    * 
+    * @param email
+    * @param password
+    * @return
+    * @throws DatabaseAccessError
+    * @throws InvalidDataException
+    */
+	public static User getUserWithPassword(String email,String password) throws DatabaseAccessError,InvalidDataException{
+		Connection conn = null;
+		try {
+			conn = DBUtil.getConnection();
+
+			PreparedStatement stmt = conn.prepareStatement(GET_USERWITHPASS);
+			stmt.setString(1, email);
+			stmt.setString(2, password);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {				
+				String name = rs.getString("user_Name");
+				String type = rs.getString("user_Type");
+				
+				if(type.equals("Owner")){
+					Owner owner = new Owner(email,name,password);
+					return (Owner)owner;
+				}else{
+					Evaluator evaluator = new Evaluator(email,name,password);
+					return (Evaluator)evaluator;
+				}
+			} else {
+				throw new InvalidDataException("User name or password not correct");
+			}
+		} catch (ClassNotFoundException | SQLException | NamingException e) {
+			throw new DatabaseAccessError("General error", e);
+		} finally {
+			try {
+				DBUtil.dropConnection(conn);
+			} catch (SQLException e) { /* ignored */
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
 	public static void addUser(User u) throws DatabaseAccessError,InvalidDataException {
 		User user = getUser(u.getEmail());
 		if(user != null){
@@ -57,6 +105,11 @@ public class UserDB {
 		}
 	}
 
+	/**
+	 *  @param login : user's email
+	 *  @return User : if user doesn't exist return null, otherwise return Owner
+	 *  or Evaluator
+	 */
 	public static User getUser(String login) throws DatabaseAccessError {
 		Connection conn = null;
 		try {

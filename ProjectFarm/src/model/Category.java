@@ -11,7 +11,7 @@ public class Category implements Serializable {
 	public Category(String description) {
 		setDescription(description);
 	}
-
+																				 
 	public String getDescription() {
 		return description;
 	}

@@ -20,8 +20,8 @@ public class CategoryDB {
 	public static List<Category> getCategories() throws DatabaseAccessError {
 		return new LinkedList<Category>(categories.values());
 	}
-	
-	public Category getCategory(String name) {
+		
+	public static Category getCategory(String name) {
 		return categories.get(name);
 	}
 
