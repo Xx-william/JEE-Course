@@ -21,18 +21,7 @@ public class OwnerFrontPage extends HttpServlet{
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		try {
 			List<Category> categorys = CategoryDB.getCategories();
-//			StringBuilder sb = new StringBuilder();
-			
-//			sb.append("{\"names\":");
-//			for(Category category : categorys){
-//				sb.append("[\""+category.getDescription()+"\"],");
-//			}
-//			sb.deleteCharAt(sb.length()-1);
-//			sb.append("}");
-			
-//			resp.setContentType("application/json");
-//			PrintWriter out = resp.getWriter();
-//			out.println(sb);
+
 			ArrayList<String> categoryNames = new ArrayList();
 			for(Category category: categorys){
 				String description = category.getDescription();

@@ -25,9 +25,7 @@
                 id="description"
                 placeholder="Desctiption"
                 name="description"
-                required>
-
-            </textarea>
+                required></textarea>
 
           </div>
 
@@ -42,7 +40,6 @@
               <div class="form-group">
                 <label class="control-label">Category:</label>
                 <select class="selectpicker" id="category">
-
                   <%
                   ArrayList<String> categorys = (ArrayList<String>) request.getAttribute("category");
                   for (int i = 0; i < categorys.size(); i++) {
