@@ -1,7 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -21,18 +21,24 @@ public class OwnerFrontPage extends HttpServlet{
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		try {
 			List<Category> categorys = CategoryDB.getCategories();
-			StringBuilder sb = new StringBuilder();
+//			StringBuilder sb = new StringBuilder();
 			
-			sb.append("{\"names\":");
-			for(Category category : categorys){
-				sb.append("[\""+category.getDescription()+"\"],");
+//			sb.append("{\"names\":");
+//			for(Category category : categorys){
+//				sb.append("[\""+category.getDescription()+"\"],");
+//			}
+//			sb.deleteCharAt(sb.length()-1);
+//			sb.append("}");
+			
+//			resp.setContentType("application/json");
+//			PrintWriter out = resp.getWriter();
+//			out.println(sb);
+			ArrayList<String> categoryNames = new ArrayList();
+			for(Category category: categorys){
+				String description = category.getDescription();
+				categoryNames.add(category.getDescription());
 			}
-			sb.deleteCharAt(sb.length()-1);
-			sb.append("}");
-			
-			resp.setContentType("application/json");
-			PrintWriter out = resp.getWriter();
-			out.println(sb);
+			req.setAttribute("category", categoryNames);
 			
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/newProject.jsp");
 			dispatcher.forward(req, resp);
