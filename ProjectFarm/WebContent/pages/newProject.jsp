@@ -97,7 +97,7 @@
               $
               .ajax({
                 type : "POST",
-                url : "/ProjectFarm/controller/NewProject",
+                url : "/ProjectFarm/NewProject",
 
                 //data : form.serialize(),
                 data:{

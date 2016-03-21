@@ -15,7 +15,7 @@ import model.Category;
 import model.db.CategoryDB;
 import model.db.exception.DatabaseAccessError;
 
-@WebServlet("/controller/OwnerFrontPage")
+@WebServlet("/OwnerFrontPage")
 public class OwnerFrontPage extends HttpServlet{
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
@@ -29,7 +29,7 @@ public class OwnerFrontPage extends HttpServlet{
 			}
 			req.setAttribute("category", categoryNames);
 			
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/newProject.jsp");
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/pages/newProject.jsp");
 			dispatcher.forward(req, resp);
 		} catch (DatabaseAccessError e) {
 			// TODO Auto-generated catch block

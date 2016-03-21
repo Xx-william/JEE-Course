@@ -16,7 +16,7 @@ import model.Project;
 import model.db.CategoryDB;
 import model.db.UserDB;
 
-@WebServlet("/controller/NewProject")
+@WebServlet("/NewProject")
 public class NewProject extends HttpServlet{
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{

@@ -17,7 +17,7 @@ import model.db.UserDB;
 import model.db.exception.DatabaseAccessError;
 import model.exception.InvalidDataException;
 
-@WebServlet("/controller/LogIn")
+@WebServlet("/LogIn")
 public class LogIn extends HttpServlet{
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String email = req.getParameter("email");
@@ -32,7 +32,8 @@ public class LogIn extends HttpServlet{
 				session.setAttribute("name",user.getName());
 				session.setAttribute("type", "Owner");	
 				session.setAttribute("isLogIn", "true");
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/ownerFrontPage.jsp");
+				
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/pages/ownerFrontPage.jsp");
 				dispatcher.forward(req, resp);
 				
 			}else if(user instanceof Evaluator){

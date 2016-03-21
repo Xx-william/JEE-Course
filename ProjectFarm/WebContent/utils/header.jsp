@@ -30,7 +30,7 @@
 					class="icon-bar"></span>
 			</button>
 			<%if (session.getAttribute("isLogIn") == "true") {%>
-			<a class="navbar-brand" href="<%= request.getContextPath()%>/ownerFrontPage.jsp">Project Farm</a>
+			<a class="navbar-brand" href="<%= request.getContextPath()%>/pages/ownerFrontPage.jsp">Project Farm</a>
 			<%} else { %>
 			<a class="navbar-brand" href="<%= request.getContextPath()%>/index.jsp">Project Farm</a>
 			<%} %>
@@ -51,7 +51,7 @@
 				</button>
 				
 			<%} else {%>
-				<form class="navbar-form form-inline" method="post" action="/ProjectFarm/controller/LogIn" data-toggle="validator"
+				<form class="navbar-form form-inline" method="post" action="/ProjectFarm/LogIn" data-toggle="validator"
 					role="from" id="loginForm">
 					<div class="form-group">
 						<label for="logAccount" class="control-label">E-mail</label> <input type="email"
