@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,9 +15,10 @@ import model.Category;
 import model.Owner;
 import model.Project;
 import model.db.CategoryDB;
+import model.db.ProjectDB;
 import model.db.UserDB;
 
-@WebServlet("/NewProject")
+@WebServlet("/controller/NewProject")
 public class NewProject extends HttpServlet{
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
@@ -32,17 +34,19 @@ public class NewProject extends HttpServlet{
 		System.out.println(categoryStr);
 		System.out.println(incubationStr);
 		System.out.println(budgetStr);
-		
-
 
 		try{
 			int incubation = Integer.parseInt(incubationStr);
 			double budget = Double.parseDouble(budgetStr);
 			Owner owner = (Owner) UserDB.getUser((String)session.getAttribute("email"));
 			Category category = CategoryDB.getCategory(categoryStr);
-			Project project = new Project(title,description,incubation,budget,owner,category);
-		}catch(Exception e){
+			Date date = new Date();
+			Project project = new Project(title,description,incubation,budget,owner,category,date);
+	        
+			ProjectDB.saveProject(project);
 			
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		
 		resp.setContentType("application/json");
@@ -50,6 +54,8 @@ public class NewProject extends HttpServlet{
 		String outString = "{ \"isSuccess\" : \"true\"}";
 		out.println(outString);
 	}
-	
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		doPost(req,resp);
+	}
 
 }

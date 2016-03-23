@@ -1,10 +1,15 @@
 package model;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.db.CategoryDB;
+import model.db.UserDB;
+import model.db.exception.DatabaseAccessError;
 import model.exception.InvalidDataException;
 
 public class Project implements Serializable {
@@ -22,7 +27,7 @@ public class Project implements Serializable {
 	private List<Document> documents;
 
 	public Project(String acronym, String description, int fundingDuration,
-			double budget, Owner owner, Category category) throws InvalidDataException {
+			double budget, Owner owner, Category category,Date created) throws InvalidDataException {
 		setAcronym(acronym);
 		setDescription(description);
 		setFundingDuration(fundingDuration);
@@ -32,8 +37,46 @@ public class Project implements Serializable {
 		setCategory(category);
 		setEvaluations(new LinkedList<>());
 		setDocuments(new LinkedList<>());
+		setCreated(created);
 	}
 
+	public Project(String title,String description,int fundingDuration,double budget, String ownerEmail, String category,String dateStr){
+	
+		Owner owner = null;
+		try {
+			owner = (Owner)UserDB.getUser(ownerEmail);
+		} catch (DatabaseAccessError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Category categoryP  = CategoryDB.getCategory(category);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		Date date = null;
+		
+		try {
+			date = sdf.parse(dateStr);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			setAcronym(acronym);
+			setDescription(description);
+			setFundingDuration(fundingDuration);
+			setBudget(budget);
+			setCreated(new Date());
+			setOwner(owner);
+			setCategory(categoryP);
+			setEvaluations(new LinkedList<>());
+			setDocuments(new LinkedList<>());
+			setCreated(created);
+			
+		} catch (InvalidDataException e) {
+			e.printStackTrace();
+		}
+	}
 	public void setDocuments(List<Document> documents) {
 		this.documents = documents;
 	}

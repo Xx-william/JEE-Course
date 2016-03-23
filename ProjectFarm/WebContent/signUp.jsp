@@ -60,7 +60,7 @@
 					  } else {
 						  var form = $('#signUpForm');
 							$.ajax({type : "POST",
-								url : "/ProjectFarm/SignUp",
+								url : "/ProjectFarm/controller/SignUp",
 								data : form.serialize(),
 								success : function(data) {
 								if (data.isSuccess == "false") {

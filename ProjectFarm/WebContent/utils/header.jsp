@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,12 +9,13 @@
 
 <link rel="stylesheet"
 	href="/ProjectFarm/ETC/bootstrap-3.3.5-dist/css/bootstrap.min.css">
-	<link rel="stylesheet"
+<link rel="stylesheet"
 	href="/ProjectFarm/ETC/bootstrap-select/css/bootstrap-select.min.css">
 <script src="/ProjectFarm/ETC/JQuery/jquery-1.12.1.min.js"></script>
 <script src="/ProjectFarm/ETC/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
 <script src="/ProjectFarm/ETC/Bootstrap-validator/validator.min.js"></script>
-<script src="/ProjectFarm/ETC/bootstrap-select/js/bootstrap-select.min.js"></script>
+<script
+	src="/ProjectFarm/ETC/bootstrap-select/js/bootstrap-select.min.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -29,12 +29,21 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<%if (session.getAttribute("isLogIn") == "true") {%>
-			<a class="navbar-brand" href="<%= request.getContextPath()%>/pages/ownerFrontPage.jsp">Project Farm</a>
-			<%} else { %>
-			<a class="navbar-brand" href="<%= request.getContextPath()%>/index.jsp">Project Farm</a>
-			<%} %>
-			
+			<%
+				if (session.getAttribute("isLogIn") == "true") {
+			%>
+			<a class="navbar-brand"
+				href="<%=request.getContextPath()%>/pages/ownerFrontPage.jsp">Project
+				Farm</a>
+			<%
+				} else {
+			%>
+			<a class="navbar-brand"
+				href="<%=request.getContextPath()%>/index.jsp">Project Farm</a>
+			<%
+				}
+			%>
+
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -43,27 +52,53 @@
 
 
 			<ul class="nav navbar-nav navbar-right">
-			
-			<% if(session.getAttribute("isLogIn") == "true") { %>
-				<button type="button" class="btn btn-default" aria-label="Left Align">
-				<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-				<%= session.getAttribute("name") %>
-				</button>
+
+
+				<!--  If user loged in -->
+				<%
+					if (session.getAttribute("isLogIn") == "true") {
+				%>
+				<div class="dropdown">
 				
-			<%} else {%>
-				<form class="navbar-form form-inline" method="post" action="/ProjectFarm/LogIn" data-toggle="validator"
+				
+					<button class="btn btn-default dropdown-toggle" type="button"
+						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="true"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						 <%=session.getAttribute("name")%>
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						
+						<li><a href="<%=request.getContextPath()%>/controller/MyProjects">My Projects</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="<%=request.getContextPath()%>/controller/Disconnect">Log out</a></li>
+					</ul>
+				</div>
+				
+
+				<%
+					} else {
+				%>
+
+				<!-- IF user did not log in -->
+				<form class="navbar-form form-inline" method="post"
+					action="/ProjectFarm/controller/LogIn" data-toggle="validator"
 					role="from" id="loginForm">
 					<div class="form-group">
-						<label for="logAccount" class="control-label">E-mail</label> <input type="email"
-							class="form-control" id="logAccount" placeholder="E-Mail" name="email" required>
+						<label for="logAccount" class="control-label">E-mail</label> <input
+							type="email" class="form-control" id="logAccount"
+							placeholder="E-Mail" name="email" required>
 					</div>
 					<div class="form-group">
-						<label for="password" class="control-label">Password</label> <input type="password"
-							class="form-control" id="password" placeholder="Password" name="password" required>
+						<label for="password" class="control-label">Password</label> <input
+							type="password" class="form-control" id="password"
+							placeholder="Password" name="password" required>
 					</div>
 					<button type="submit" class="btn btn-default">Log in</button>
 				</form>
-			<%}%>
+				<%
+					}
+				%>
 
 			</ul>
 

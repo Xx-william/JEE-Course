@@ -14,8 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import model.Category;
 import model.db.CategoryDB;
 import model.db.exception.DatabaseAccessError;
+import model.exception.InvalidDataException;
 
-@WebServlet("/OwnerFrontPage")
+@WebServlet("/controller/OwnerFrontPage")
 public class OwnerFrontPage extends HttpServlet{
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
@@ -33,6 +34,8 @@ public class OwnerFrontPage extends HttpServlet{
 			dispatcher.forward(req, resp);
 		} catch (DatabaseAccessError e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidDataException e){
 			e.printStackTrace();
 		}
 	}

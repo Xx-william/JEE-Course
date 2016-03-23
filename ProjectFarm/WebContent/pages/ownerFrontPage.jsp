@@ -12,7 +12,7 @@
 		<div class="row">	
 			</div>
 			<div class="col-xs-3 col-xs-offset-4">
-			<form action="/ProjectFarm/OwnerFrontPage" method="get">
+			<form action="/ProjectFarm/controller/OwnerFrontPage" method="get">
 			<center>
 			<button class="btn btn-default">New project idea</button>
 			</center>

@@ -1,46 +1,155 @@
 package model.db;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import model.Category;
 import model.Owner;
 import model.Project;
 import model.db.exception.DatabaseAccessError;
+import model.exception.InvalidDataException;
 
 public class ProjectDB {
-
+	private static String SAVE_PROJECT = "INSERT INTO project(project_description,project_fundingDuration,project_budget,project_created,project_owner,project_category,project_acronym) values(?,?,?,?,?,?,?)";
+	private static String GET_PROJECT = "SELECT * FROM project WHERE project_acronym = ?";
+	private static String GET_PROJECTSOFOWNER = "SELECT * FROM project WHERE project_owner = ?";
 	private static Map<String, Project> projects;
 
-	static {
-		projects = new LinkedHashMap<String, Project>();
-	}
+//	static {
+//		projects = new LinkedHashMap<String, Project>();
+//	}
 
 	public static void saveProject(Project project) throws DatabaseAccessError {
 		
-		projects.put(project.getAcronym(), project);
+		Connection conn = null;
+		try{
+			conn = DBUtil.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(SAVE_PROJECT);
+			
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+			String dateStr = sdf.format(project.getCreated());
+			
+			
+			stmt.setString(1, project.getDescription());
+			stmt.setInt(2, project.getFundingDuration());
+			stmt.setDouble(3, project.getBudget());
+			stmt.setString(4, dateStr);
+			stmt.setString(5, project.getOwner().getEmail());
+			stmt.setString(6, project.getCategory().getDescription());
+			stmt.setString(7, project.getAcronym());
+			int rt = stmt.executeUpdate();
+			if(rt<=0){
+				throw new DatabaseAccessError("Data base error at #ProjectDB");
+			}
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	//	projects.put(project.getAcronym(), project);
 	}
 
-	public static Project getProject(String acronym) throws DatabaseAccessError {
+	public static Project getProject(String acronym) throws DatabaseAccessError,InvalidDataException {
+		Connection conn = null;
+		try {
+			conn = DBUtil.getConnection();
+			
+			PreparedStatement stmt = conn.prepareStatement(GET_PROJECT);
+			stmt.setString(1, acronym);
+			ResultSet rs = stmt.executeQuery();			
+			if(rs.next()){
+				String title = rs.getString("project_acronym");
+				String description = rs.getString("project_description");
+				double budget = rs.getDouble("project_budget");
+				String created = rs.getString("project_created");
+				String ownerEmail = rs.getString("project_owner");
+				String categoryStr = rs.getString("project_category");
+				int fundingDuration = rs.getInt("project_fundingDuration");
+				
+				Owner owner = (Owner)UserDB.getUser(ownerEmail);
+				Category category  = CategoryDB.getCategory(categoryStr);
+				
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+				Date date = sdf.parse(created);
+				
+				Project project = new Project(title,description,fundingDuration,
+						 budget,owner,category,date);
+				
+				return project;				
+			}else{
+				throw new InvalidDataException("There is no project called" + acronym);
+			}
+			
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} 
+		
+		
 		return projects.get(acronym);
 	}
 
-	public static List<Project> getProjectsOfOwner(Owner owner) throws DatabaseAccessError {
+	public static ArrayList<Project> getProjectsOfOwner(Owner owner) {
 
-		List<Project> projectsOfOwner = new LinkedList<Project>();
+		ArrayList<Project> projects = new ArrayList<Project>();
+		Connection conn = null;
+		try{
+			conn = DBUtil.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(GET_PROJECTSOFOWNER);
+			stmt.setString(1, owner.getEmail());
+			
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()){
+				String title = rs.getString("project_acronym");
+				String description = rs.getString("project_description");
+				double budget = rs.getDouble("project_budget");
+				String created = rs.getString("project_created");
+				String categoryStr = rs.getString("project_category");
+				int fundingDuration = rs.getInt("project_fundingDuration");				
+				Category category  = CategoryDB.getCategory(categoryStr);
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+				Date date = sdf.parse(created);
+				
+				Project project = new Project(title,description,fundingDuration,
+						 budget,owner,category,date);
+				projects.add(project);
+				
+				while(rs.next()){
+					 title = rs.getString("project_acronym");
+					 description = rs.getString("project_description");
+					 budget = rs.getDouble("project_budget");
+					 created = rs.getString("project_created");
 
-		for (Project p : projects.values()) {
-			if (p.getOwner().equals(owner)) {
-				projectsOfOwner.add(p);
+					 categoryStr = rs.getString("project_category");
+					 fundingDuration = rs.getInt("project_fundingDuration");
+					
+					 category  = CategoryDB.getCategory(categoryStr);					
+					 date = sdf.parse(created);					
+					 project = new Project(title,description,fundingDuration,
+							 budget,owner,category,date);
+					projects.add(project);
+				}
+				
+				
+			}else{
+				
 			}
+		}catch(Exception e){
+			
 		}
-		return projectsOfOwner;
-
+		return projects;
+		
 	}
 	
-	public static List<Project> getAllProjects() throws DatabaseAccessError {
-		return new LinkedList<Project>(projects.values());
-	}
+//	public static List<Project> getAllProjects() throws DatabaseAccessError {
+//		return new LinkedList<Project>(projects.values());
+//	}
 	
 }

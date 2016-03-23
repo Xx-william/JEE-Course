@@ -16,8 +16,7 @@ import model.User;
 import model.db.UserDB;
 import model.db.exception.DatabaseAccessError;
 import model.exception.InvalidDataException;
-
-@WebServlet("/LogIn")
+@WebServlet("/controller/LogIn")
 public class LogIn extends HttpServlet{
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		String email = req.getParameter("email");
@@ -32,7 +31,7 @@ public class LogIn extends HttpServlet{
 				session.setAttribute("name",user.getName());
 				session.setAttribute("type", "Owner");	
 				session.setAttribute("isLogIn", "true");
-				
+				session.setAttribute("password", password);
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/pages/ownerFrontPage.jsp");
 				dispatcher.forward(req, resp);
 				
@@ -42,6 +41,7 @@ public class LogIn extends HttpServlet{
 				session.setAttribute("email", email);
 				session.setAttribute("name",user.getName());
 				session.setAttribute("type", "Evaluator");
+				session.setAttribute("password", password);
 			}
 		} catch (DatabaseAccessError e) {
 			// TODO Auto-generated catch block
@@ -49,6 +49,9 @@ public class LogIn extends HttpServlet{
 		}catch ( InvalidDataException e){
 			System.out.println(e.getMessage());
 		}
+	}
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		doPost(req,resp);
 	}
 	
 }

@@ -15,7 +15,7 @@ import model.db.UserDB;
 import model.db.exception.DatabaseAccessError;
 import model.exception.InvalidDataException;
 
-@WebServlet("/SignUp")
+@WebServlet("/controller/SignUp")
 public class SignUp extends HttpServlet{
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{

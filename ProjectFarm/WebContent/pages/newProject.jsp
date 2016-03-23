@@ -41,7 +41,12 @@
                 <label class="control-label">Category:</label>
                 <select class="selectpicker" id="category">
                   <%
-                  ArrayList<String> categorys = (ArrayList<String>) request.getAttribute("category");
+                  ArrayList<String> categorys = new ArrayList<String>();
+                  try{
+                	  categorys = (ArrayList<String>) request.getAttribute("category");
+                  }catch(Exception e){
+                	  //when user already loged in and come to this page by URL, erro occurre
+                  }    
                   for (int i = 0; i < categorys.size(); i++) {
                     %>
                     <option data="<%= categorys.get(i)%>"><%= categorys.get(i) %></option>
@@ -97,7 +102,7 @@
               $
               .ajax({
                 type : "POST",
-                url : "/ProjectFarm/NewProject",
+                url : "/ProjectFarm/controller/NewProject",
 
                 //data : form.serialize(),
                 data:{
