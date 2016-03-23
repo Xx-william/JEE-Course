@@ -57,10 +57,9 @@
 				<!--  If user loged in -->
 				<%
 					if (session.getAttribute("isLogIn") == "true") {
+						if(session.getAttribute("type") == "Owner"){//if user is a Owner
 				%>
-				<div class="dropdown">
-				
-				
+				<div class="dropdown">				
 					<button class="btn btn-default dropdown-toggle" type="button"
 						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="true"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
@@ -74,12 +73,28 @@
 						<li><a href="<%=request.getContextPath()%>/controller/Disconnect">Log out</a></li>
 					</ul>
 				</div>
-				
-
 				<%
-					} else {
+						}else{ //if user is an Evaluator
 				%>
-
+							<div class="dropdown">				
+							<button class="btn btn-default dropdown-toggle" type="button"
+								id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="true"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+								 <%=session.getAttribute("name")%>
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+								
+								<li><a href="<%=request.getContextPath()%>/controller/ListProjects">List Projects</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a href="<%=request.getContextPath()%>/controller/Disconnect">Log out</a></li>
+							</ul>
+						</div>
+						<%
+						}
+						
+						} else {
+				%>
 				<!-- IF user did not log in -->
 				<form class="navbar-form form-inline" method="post"
 					action="/ProjectFarm/controller/LogIn" data-toggle="validator"

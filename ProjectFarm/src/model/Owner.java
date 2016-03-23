@@ -8,5 +8,4 @@ public class Owner extends User {
 	public Owner(String email, String name, String password) {
 		super(email, name, password);
 	}
-
 }

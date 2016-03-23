@@ -41,7 +41,10 @@ public class LogIn extends HttpServlet{
 				session.setAttribute("email", email);
 				session.setAttribute("name",user.getName());
 				session.setAttribute("type", "Evaluator");
+				session.setAttribute("isLogIn", "true");
 				session.setAttribute("password", password);
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/pages/evaluatorFrontPage.jsp");
+				dispatcher.forward(req, resp);
 			}
 		} catch (DatabaseAccessError e) {
 			// TODO Auto-generated catch block
