@@ -30,11 +30,12 @@
     Gson gson = new Gson();
     Type collectionType = new TypeToken<ArrayList<MyProjectPage>>(){}.getType();
     ArrayList<MyProjectPage> projects = gson.fromJson(json, collectionType);
-    
+      
     for(MyProjectPage project : projects){
     	%> 
     	<tr>
-    	<td><%=project.getAcronym() %> </td>
+		<td><a href="<%=request.getContextPath() %>/controller/Evaluate?projectId=<%=project.getProjectId()%>"><%=project.getAcronym()%></a></td>
+    	
     	<td><%=project.getCategory() %> </td>
     	<td><%=project.getIncubation() %> </td>
     	<td><%=project.getBudget() %> </td>

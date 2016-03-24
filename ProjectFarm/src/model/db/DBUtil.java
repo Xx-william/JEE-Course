@@ -26,7 +26,6 @@ public class DBUtil {
 	}
 
 	public static void dropConnection(Connection con) throws SQLException {
-
 		if (con != null) {
 			con.close();
 		}

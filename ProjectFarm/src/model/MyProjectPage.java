@@ -3,6 +3,7 @@ package model;
 import java.util.List;
 
 public class MyProjectPage {
+	private int projectId;
 	private String acronym;
 	private String category;
 	private int incubation;
@@ -12,6 +13,7 @@ public class MyProjectPage {
 	private int numEvaluators;
 	
 	public MyProjectPage(Project project){
+		setProjectId(project.getProjectId());
 		setAcronym(project.getAcronym());
 		setCategory(project.getCategory().getDescription());
 		setIncubation(project.getFundingDuration());
@@ -34,7 +36,12 @@ public class MyProjectPage {
 		}
 		
 	}
-
+	public void setProjectId(int projectId){
+		this.projectId = projectId;
+	}
+	public int getProjectId(){
+		return this.projectId;
+	}
 	public void setAcronym(String acronym){
 		this.acronym = acronym;
 	}

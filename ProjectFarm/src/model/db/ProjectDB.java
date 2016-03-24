@@ -47,6 +47,12 @@ public class ProjectDB {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally{
+			try{
+				DBUtil.dropConnection(conn);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 		// projects.put(project.getAcronym(), project);
 	}
@@ -79,6 +85,12 @@ public class ProjectDB {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally{
+			try{
+				DBUtil.dropConnection(conn);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 		return project;
 	}
@@ -145,6 +157,7 @@ public class ProjectDB {
 				Date date = sdf.parse(created);
 
 				Project project = new Project(title, description, fundingDuration, budget, owner, category, date);
+				project.setProjectId(rs.getInt("project_id"));
 				projects.add(project);
 
 				while (rs.next()) {
@@ -159,6 +172,8 @@ public class ProjectDB {
 					category = CategoryDB.getCategory(categoryStr);
 					date = sdf.parse(created);
 					project = new Project(title, description, fundingDuration, budget, owner, category, date);
+					project.setProjectId(rs.getInt("project_id"));
+
 					projects.add(project);
 				}
 
@@ -167,6 +182,12 @@ public class ProjectDB {
 			}
 		} catch (Exception e) {
 
+		}finally{
+			try{
+				DBUtil.dropConnection(conn);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 		return projects;
 
@@ -201,6 +222,12 @@ public class ProjectDB {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally{
+			try{
+				DBUtil.dropConnection(conn);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 		return listProjectsPages;
 	}

@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import com.sun.org.apache.regexp.internal.RE;
-
 import model.Document;
 
 public class DocumentDB {
@@ -29,6 +27,12 @@ public class DocumentDB {
 		 }
 	 }catch(Exception e){
 		 e.printStackTrace();
+	 }finally{
+		 try{
+			 DBUtil.dropConnection(conn);
+		 }catch(Exception e){
+			 e.printStackTrace();
+		 }
 	 }
 	 return documents;
  }

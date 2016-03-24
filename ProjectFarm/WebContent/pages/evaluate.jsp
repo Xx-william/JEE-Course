@@ -56,7 +56,7 @@
 				<hr>
 
 				<div class="row">
-					<div class="col-xs-4">
+					<div class="col-xs-8">
 						<h4>Documents:</h4>
 						
 						<% 
@@ -71,12 +71,24 @@
 						}	}					
 						%>
 					</div>
+					
+					<%
+					if(request.getSession().getAttribute("type") == "Owner"){
+						%>
+							<div class="col-xs-4">
+								<button class="btn btn-default">Upload</button>
+							</div>
+						<%
+					}
+						%>
+					
 				</div>
 
 				<hr>
-
+				<%if(request.getSession().getAttribute("type") == "Evaluator") {%>
 				<div class="row">
 					<div class="col-xs-12">
+					
 						<h4>Your evaluation:</h4>
 						<form>
 							<div class="form-group col-xs-6">
@@ -106,6 +118,24 @@
 						</form>
 					</div>
 				</div>
+				
+				<%} else{ %>
+				<div class="row">
+				<h4>Statistics</h4>
+					<div class="col-xs-4">
+						<h4>Risk Level:</h4>
+						<h4>test0</h4>
+					</div>		
+					<div class="col-xs-4">
+						<h4>Attractiveness:</h4>
+						<h4>test0</h4>
+					</div>	
+					<div class="col-xs-4">
+						<h4>#of evaluators</h4>
+						<h4>test0</h4>
+					</div>			
+				</div>				
+				<%} %>
 			</div>
 
 		</div>

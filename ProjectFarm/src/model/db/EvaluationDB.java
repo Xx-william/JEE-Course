@@ -32,6 +32,12 @@ public class EvaluationDB {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
+		}finally{
+			try{
+				DBUtil.dropConnection(conn);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 	}
 	public static ArrayList<Evaluation> getEvalByProjID(int projectId){
@@ -56,6 +62,12 @@ public class EvaluationDB {
 			}
 		}catch (Exception e){
 			e.printStackTrace();
+		}finally{
+			try{
+				DBUtil.dropConnection(conn);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 		return evaluations;
 	}

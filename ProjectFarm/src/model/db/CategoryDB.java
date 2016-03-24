@@ -74,6 +74,12 @@ public class CategoryDB {
 					
 				}catch(Exception e){
 					e.printStackTrace();
+				}finally {
+					try {
+						DBUtil.dropConnection(conn);
+					} catch (SQLException e) { /* ignored */
+						e.printStackTrace();
+					}
 				}
 				return category;
 	}

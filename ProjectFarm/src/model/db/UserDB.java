@@ -7,8 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import javax.naming.NamingException;
 
@@ -41,7 +39,6 @@ public class UserDB {
 		Connection conn = null;
 		try {
 			conn = DBUtil.getConnection();
-
 			PreparedStatement stmt = conn.prepareStatement(GET_USERWITHPASS);
 			stmt.setString(1, email);
 			stmt.setString(2, password);
@@ -49,8 +46,7 @@ public class UserDB {
 
 			if (rs.next()) {				
 				String name = rs.getString("user_Name");
-				String type = rs.getString("user_Type");
-				
+				String type = rs.getString("user_Type");				
 				if(type.equals("Owner")){
 					Owner owner = new Owner(email,name,password);
 					return (Owner)owner;
