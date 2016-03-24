@@ -15,7 +15,7 @@ import model.db.exception.DatabaseAccessError;
 
 public class ProjectDB {
 	private static String SAVE_PROJECT = "INSERT INTO project(project_description,project_fundingDuration,project_budget,project_created,project_owner,project_category,project_acronym) values(?,?,?,?,?,?,?)";
-	private static String GET_PROJECT_BY_ID = "SELECT * FROM project WHERE project_acronym = ?";
+	private static String GET_PROJECT_BY_ID = "SELECT * FROM project WHERE project_id = ?";
 	private static String GET_PROJECTSOFOWNER = "SELECT * FROM project WHERE project_owner = ?";
 	private static String GET_ALLPROJECTS = "SELECT * FROM project";
 	private static String GET_EVALUATIONS_IDS_OF_PROJECT = "SELECT evaluation_id FROM evaluation WHERE project_id = ?";
@@ -61,6 +61,7 @@ public class ProjectDB {
 			ResultSet rs = stmt.executeQuery();
 			
 			rs.next();
+			int projectId = rs.getInt("project_id");
 			String acronym = rs.getString("project_acronym");
 			String description = rs.getString("project_description");
 			int fundingDuration = rs.getInt("project_fundingDuration");
@@ -74,7 +75,7 @@ public class ProjectDB {
 //			Owner owner = (Owner)UserDB.getUser(OwnerStr);
 //			Category category = CategoryDB.getCategory(categoryName);
 			
-			 project = new Project(acronym, description, fundingDuration, budget, ownerStr,  categoryName , createdStr);
+			 project = new Project(projectId,acronym, description, fundingDuration, budget, ownerStr,  categoryName , createdStr);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -180,6 +181,7 @@ public class ProjectDB {
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
+				int projectId = rs.getInt("project_id");
 				String acronym = rs.getString("project_acronym");
 				String category = rs.getString("project_category");
 				int incubation = rs.getInt("project_fundingDuration");
@@ -192,7 +194,7 @@ public class ProjectDB {
 				while (rs2.next()) {
 					numEvaluations++;
 				}
-				ListProjectsPage listProjectPage = new ListProjectsPage(acronym, category, incubation, budget,
+				ListProjectsPage listProjectPage = new ListProjectsPage(projectId,acronym, category, incubation, budget,
 						numEvaluations);
 				listProjectsPages.add(listProjectPage);
 			}

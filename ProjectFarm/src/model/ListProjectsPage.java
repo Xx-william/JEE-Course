@@ -1,13 +1,15 @@
 package model;
 
 public class ListProjectsPage {
+	private int projectId;
 	private String acronym;
 	private String category;
 	private int incubation;
 	private double budget;
 	private int numEvaluations;
 	
-	public ListProjectsPage(String acronym,String category, int incubation, double budget, int numEvaluations){
+	public ListProjectsPage(int projectId,String acronym,String category, int incubation, double budget, int numEvaluations){
+		setProjectId(projectId);
 		setAcronym(acronym);
 		setCategory(category);
 		setIncubation(incubation);
@@ -16,6 +18,7 @@ public class ListProjectsPage {
 	}
 	
 	public ListProjectsPage(Project project){
+		setProjectId(projectId);
 		setAcronym(project.getAcronym());
 		setCategory(project.getCategory().getDescription());
 		setIncubation(project.getFundingDuration());
@@ -28,6 +31,12 @@ public class ListProjectsPage {
 		}
 	}
 	
+	public void setProjectId(int projectId){
+		this.projectId = projectId;
+	}
+	public int getProjectId(){
+		return this.projectId;
+	}
 	
 	public void setAcronym(String acronym){
 		this.acronym = acronym;

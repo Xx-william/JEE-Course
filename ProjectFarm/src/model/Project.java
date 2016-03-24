@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class Project implements Serializable {
 
 	private static final long serialVersionUID = 2180069907986538519L;
 
+	private int projectId;
 	private String acronym;
 	private String description;
 	private int fundingDuration;
@@ -23,11 +25,12 @@ public class Project implements Serializable {
 	private Date created;
 	private Owner owner;
 	private Category category;
-	private List<Evaluation> evaluations;
-	private List<Document> documents;
+	private ArrayList<Evaluation> evaluations;
+	private ArrayList<Document> documents;
 
 	public Project(String acronym, String description, int fundingDuration,
 			double budget, Owner owner, Category category,Date created) throws InvalidDataException {
+		setProjectId(projectId);
 		setAcronym(acronym);
 		setDescription(description);
 		setFundingDuration(fundingDuration);
@@ -35,13 +38,13 @@ public class Project implements Serializable {
 		setCreated(new Date());
 		setOwner(owner);
 		setCategory(category);
-		setEvaluations(new LinkedList<>());
-		setDocuments(new LinkedList<>());
+		setEvaluations(new ArrayList<>());
+		setDocuments(new ArrayList<>());
 		setCreated(created);
 	}
 
-	public Project(String title,String description,int fundingDuration,double budget, String ownerEmail, String category,String dateStr){
-	
+	public Project(int projectId,String title,String description,int fundingDuration,double budget, String ownerEmail, String category,String dateStr){
+		
 		Owner owner = null;
 		try {
 			owner = (Owner)UserDB.getUser(ownerEmail);
@@ -62,26 +65,27 @@ public class Project implements Serializable {
 		}
 		
 		try {
-			setAcronym(acronym);
+			setProjectId(projectId);
+			setAcronym(title);
 			setDescription(description);
 			setFundingDuration(fundingDuration);
 			setBudget(budget);
 			setCreated(new Date());
 			setOwner(owner);
 			setCategory(categoryP);
-			setEvaluations(new LinkedList<>());
-			setDocuments(new LinkedList<>());
+			setEvaluations(new ArrayList<>());
+			setDocuments(new ArrayList<>());
 			setCreated(created);
 			
 		} catch (InvalidDataException e) {
 			e.printStackTrace();
 		}
 	}
-	public void setDocuments(List<Document> documents) {
+	public void setDocuments(ArrayList<Document> documents) {
 		this.documents = documents;
 	}
 
-	private void setEvaluations(List<Evaluation> evaluations) {
+	private void setEvaluations(ArrayList<Evaluation> evaluations) {
 		this.evaluations = evaluations;
 	}
 
@@ -174,6 +178,12 @@ public class Project implements Serializable {
 	
 	public List<Document> getDocuments() {
 		return documents;
+	}
+	public void setProjectId(int projectId){
+		this.projectId = projectId;
+	}
+	public int getProjectId(){
+		return this.projectId;
 	}
 
 }

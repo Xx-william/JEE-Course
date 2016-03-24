@@ -25,7 +25,7 @@ public class SignUp extends HttpServlet{
 		String passwordVerify = req.getParameter("passwordVerify");
 		String type = req.getParameter("optradio");
 		
-		//TODO: verify the two passwords are the same
+		//TODO: verify if the two passwords are the same
 		
 		if(type.equals("Owner")){
 			Owner owner = new Owner(email,name,password);

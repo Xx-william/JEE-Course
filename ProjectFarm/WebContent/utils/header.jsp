@@ -31,11 +31,24 @@
 			</button>
 			<%
 				if (session.getAttribute("isLogIn") == "true") {
+					if(session.getAttribute("type") == "Owner"){
 			%>
 			<a class="navbar-brand"
 				href="<%=request.getContextPath()%>/pages/ownerFrontPage.jsp">Project
 				Farm</a>
 			<%
+					}else if(session.getAttribute("type") == "Evaluator"){
+						%> 
+						
+								<a class="navbar-brand"
+								href="<%=request.getContextPath()%>/pages/evaluatorFrontPage.jsp">Project
+								Farm</a>
+						
+						<% 
+				
+								
+					}
+					
 				} else {
 			%>
 			<a class="navbar-brand"

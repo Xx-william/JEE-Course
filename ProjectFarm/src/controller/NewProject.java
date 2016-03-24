@@ -22,6 +22,7 @@ import model.db.UserDB;
 public class NewProject extends HttpServlet{
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+
 		String title = req.getParameter("title");
 		String description = req.getParameter("description");
 		String categoryStr = req.getParameter("category");
@@ -29,11 +30,6 @@ public class NewProject extends HttpServlet{
 		String budgetStr = req.getParameter("budget");
 		HttpSession session = req.getSession();
 		
-		System.out.println(title);
-		System.out.println(description);
-		System.out.println(categoryStr);
-		System.out.println(incubationStr);
-		System.out.println(budgetStr);
 
 		try{
 			int incubation = Integer.parseInt(incubationStr);
