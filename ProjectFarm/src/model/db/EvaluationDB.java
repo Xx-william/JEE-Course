@@ -51,13 +51,13 @@ public class EvaluationDB {
 			while(rs.next()){
 			//	int pid = rs.getInt("project_id");
 				String evaluatorMail = rs.getString("evaluator_mail");
-				int attractiveness = rs.getInt("attractiveness");
+				int attractiveness = rs.getInt("attractivness");
 				int risk = rs.getInt("risk");
 				
 			//	Project project = ProjectDB.getProject(pid);
 				Evaluator evaluator = (Evaluator)UserDB.getUser(evaluatorMail);
 				
-				Evaluation evaluation = new Evaluation(evaluator,attractiveness,risk);
+				Evaluation evaluation = new Evaluation(projectId,evaluator,attractiveness,risk);
 				evaluations.add(evaluation);
 			}
 		}catch (Exception e){

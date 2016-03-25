@@ -30,7 +30,7 @@ public class Evaluate extends HttpServlet{
 		Project project = ProjectDB.getProject(projectId);		
 		ArrayList<Document> documents = DocumentDB.getDocumentByProjectId(projectId);
 		
-		EvaluatePage evaluatePage = new EvaluatePage(project.getAcronym(),project.getCreated(),project.getDescription(),
+		EvaluatePage evaluatePage = new EvaluatePage(project.getProjectId(),project.getAcronym(),project.getCreated(),project.getDescription(),
 		project.getCategory(), project.getFundingDuration(), project.getBudget(),documents);		
 		Gson gson = new Gson();
 		String json = gson.toJson(evaluatePage);		

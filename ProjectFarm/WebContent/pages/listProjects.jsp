@@ -36,7 +36,7 @@
 				    	<td><%=project.getIncubation() %> </td>
 				    	<td><%=project.getBudget() %> </td>
 				    	<td><%=project.getNumEvaluations() %> </td>
-				    	<td><button class="btn btn-default"><a href="<%=request.getContextPath() %>/controller/Evaluate?projectId=<%=project.getProjectId()%>">Evaluate</a></button></td>
+				    	<td><a class="btn btn-primary" href="<%=request.getContextPath() %>/controller/Evaluate?projectId=<%=project.getProjectId()%>">Evaluate</a></td>
 				    	<%
 				 }
 			%>

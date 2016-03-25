@@ -23,6 +23,7 @@ public class MyProjectPage {
 		setNumEvaluators(evaluations.size());
 		double allRisk = 0;
 		double allAttractiveness = 0;
+		
 		if(!evaluations.isEmpty()){
 			for(Evaluation evaluation : evaluations){
 				allRisk += evaluation.getRiskLevel();
@@ -69,7 +70,7 @@ public class MyProjectPage {
 	public void setRisk(double risk){
 		this.risk = risk;
 	}
-	public double getRist(){
+	public double getRisk(){
 		return this.risk;
 	}
 	public void setAttractiveness(double attractiveness){

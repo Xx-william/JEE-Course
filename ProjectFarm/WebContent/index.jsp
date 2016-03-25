@@ -13,7 +13,7 @@
 		<div class="row">	
 			<div class="col-xs-3 col-xs-offset-4">
 			<form action="" method="get">
-			<button class="btn btn-default">Learn More</button>
+			<a class="btn btn-default" href="https://github.com/Xx-william/JEE-Course">Learn More</a>
 			</form>
 			
 			</div>
@@ -26,5 +26,5 @@
 		</div>
 	</div>
 
-  <jsp:include page="/utils/footer.jsp"></jsp:include>
+<jsp:include page="/utils/footer.jsp"></jsp:include>
 

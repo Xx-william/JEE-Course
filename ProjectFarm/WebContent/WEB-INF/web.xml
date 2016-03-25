@@ -21,4 +21,13 @@
   <servlet-name>NoInvoker</servlet-name>  
   <url-pattern>/controller/*</url-pattern>  
 </servlet-mapping> 
+
+
+<context-param> 
+    <description>Location to store uploaded file</description> 
+    <param-name>file-upload</param-name> 
+    <param-value>
+			/Users/William/Desktop/upload
+     </param-value> 
+</context-param>
 </web-app>

@@ -57,8 +57,7 @@
 
 				<div class="row">
 					<div class="col-xs-8">
-						<h4>Documents:</h4>
-						
+						<h4>Documents:</h4>						
 						<% 
 						ArrayList<String> documents = new ArrayList<String>(evaluatePage.getDocuments());
 						if(!documents.isEmpty()){
@@ -76,12 +75,44 @@
 					if(request.getSession().getAttribute("type") == "Owner"){
 						%>
 							<div class="col-xs-4">
-								<button class="btn btn-default">Upload</button>
+								<form id="upload">
+									<input type="file" name="fileUpload">
+									<button type="submit" class="btn btn-default">Submit</button>
+								</form>
+								<div id="uploadResponse"></div>
 							</div>
 						<%
 					}
 						%>
-					
+					<script>
+					var formData = new FormData();
+					$('#upload').validator().on('submit', function (e) {
+						  if (e.isDefaultPrevented()) {
+						    // handle the invalid form...
+						  } else {
+							  var form = $('#upload');
+								$.ajax({type : "POST",
+									url : "/ProjectFarm/controller/UploadFile",
+									 cache: false,
+									    data: new FormData($('#upload')[0]),
+									    processData: false,
+									    contentType: false,							
+									success : function(data) {
+									if (data.isSuccess == "false") {
+										$("#uploadResponse").append("<div class='alert alert-danger' role='alert'>"
+											+ data.errorMessage + "</div>");
+									} else if (data.isSuccess == "true") {
+										$("#uploadResponse").append("<div class='alert alert-success' role='alert'>Your document has been uploaded</div>");
+										}
+									},
+									error : function() {
+											$("#uploadResponse").append("<h1>fails</h1>");
+											}
+								});
+								return false;
+						  }
+						})	
+					</script>
 				</div>
 
 				<hr>
@@ -90,10 +121,10 @@
 					<div class="col-xs-12">
 					
 						<h4>Your evaluation:</h4>
-						<form>
+						<form id="optionForm">
 							<div class="form-group col-xs-6">
-								<label class="control-label">Attractivness:</label> <select
-									class="selectpicker" id="attractivness">
+								<label class="control-label">Attractiveness:</label> <select
+									class="selectpicker" id="attractiveness">
 									<option data="1">1</option>
 									<option data="2">2</option>
 									<option data="3">3</option>
@@ -116,6 +147,37 @@
 							<button id="formSubmit" class="btn btn-default" type="submit">Save</button>
 							<button class="btn btn-default">Discard</button>
 						</form>
+						
+						<script>
+						$('#optionForm').validator().on('submit', function (e) {
+							  if (e.isDefaultPrevented()) {
+							    // handle the invalid form...
+							  } else {
+								  var form = $('#optionForm');
+									$.ajax({type : "POST",
+										url : "/ProjectFarm/controller/NewEvaluation",
+										data : {
+											attractiveness: $("#attractiveness").val(),
+												risk: $("#risk").val(),
+												projectId: <%= evaluatePage.getProjectId()%>
+										},									
+										success : function(data) {
+										if (data.isSuccess == "false") {
+											$("#ajaxResponse").append("<div class='alert alert-danger' role='alert'>"
+												+ data.errorMessage + "</div>");
+										} else if (data.isSuccess == "true") {
+											$("#ajaxResponse").append("<div class='alert alert-success' role='alert'>Your evaluation has been saved</div>");
+											}
+										},
+										error : function() {
+												$("#ajaxResponse").append("<h1>fails</h1>");
+												}
+									});
+									return false;
+							  }
+							})		
+						
+						</script>
 					</div>
 				</div>
 				
@@ -136,6 +198,7 @@
 					</div>			
 				</div>				
 				<%} %>
+				<div id="ajaxResponse"></div>
 			</div>
 
 		</div>

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class EvaluatePage {
+	private int projectId;
 	private String acronym;
 	private String created;
 	private String description;
@@ -13,8 +14,9 @@ public class EvaluatePage {
 	private double budget;
 	private ArrayList<String> documents = new ArrayList<String>();
 	
-	public EvaluatePage(String acronym,Date created,String description,
+	public EvaluatePage(int projectId,String acronym,Date created,String description,
 			Category category, int incubation, double budget, ArrayList<Document> documents){
+		setProjectId(projectId);
 		setAcronym(acronym);
 		setCreated(created);
 		setDescription(description);
@@ -24,7 +26,12 @@ public class EvaluatePage {
 		setDocuments(documents);
 	}
 	
-	
+	public void setProjectId(int projectId){
+		this.projectId = projectId;
+	}
+	public int getProjectId(){
+		return this.projectId;
+	}
 	public void setAcronym(String  acronym){
 		this.acronym = acronym;
 	}

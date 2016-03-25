@@ -40,7 +40,7 @@
     	<td><%=project.getIncubation() %> </td>
     	<td><%=project.getBudget() %> </td>
     	<%
-    		double risk = project.getRist();
+    		double risk = project.getRisk();
     		String riskColor = "";
     		if(risk < 2){
     			riskColor = "#5cb85c"; // green 
@@ -50,16 +50,16 @@
     			riskColor = "#d9534f"; // red
     		}
     	%>
-    	<td style="background-color: <%=riskColor%>"><%=project.getRist() %> </td>
+    	<td style="background-color: <%=riskColor%>"><%=project.getRisk() %> </td>
     	
     	<%
     		double attractive = project.getAttractiveness();
     		String attractiveColor = "";
     		if(attractive < 2){
     			attractiveColor = "#d9534f"; // red 
-    		}else if(attractive>=2 && risk < 4){
+    		}else if(attractive>=2 && attractive < 4){
     			attractiveColor = "#f0ad4e"; // yellow
-    		}else if(attractive >=4 && risk <=5){
+    		}else if(attractive >=4 && attractive <=5){
     			attractiveColor = "#5cb85c"; // green 
     		}
     	%>

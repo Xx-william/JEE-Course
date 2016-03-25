@@ -8,24 +8,25 @@ public class Evaluation implements Serializable {
 
 	private static final long serialVersionUID = -2917944580171297941L;
 
-	private Project project;
+	private int projectId;
 	private Evaluator evaluator;
 	private int attractiveness;
 	private int riskLevel;
 
-	public Evaluation(Evaluator evaluator, int attractiveness,
+	public Evaluation(int projectId,Evaluator evaluator, int attractiveness,
 			int riskLevel) throws InvalidDataException {
+		setProjectId(projectId);
 		setEvaluator(evaluator);
 		setAttractiveness(attractiveness);
 		setRiskLevel(riskLevel);
 	}
 
-	public Project getProject() {
-		return project;
+	public int getProjectId() {
+		return projectId;
 	}
 
-	public void setProject(Project project) {
-		this.project = project;
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
 	}
 
 	public Evaluator getEvaluator() {

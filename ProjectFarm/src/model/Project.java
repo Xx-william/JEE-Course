@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 import model.db.CategoryDB;
+import model.db.DocumentDB;
+import model.db.EvaluationDB;
 import model.db.UserDB;
 import model.db.exception.DatabaseAccessError;
 import model.exception.InvalidDataException;
@@ -24,12 +26,12 @@ public class Project implements Serializable {
 	private Date created;
 	private Owner owner;
 	private Category category;
-	private ArrayList<Evaluation> evaluations;
-	private ArrayList<Document> documents;
+	private ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
+	private ArrayList<Document> documents = new ArrayList<Document>();
 
 	public Project(String acronym, String description, int fundingDuration,
 			double budget, Owner owner, Category category,Date created) throws InvalidDataException {
-		setProjectId(projectId);
+		
 		setAcronym(acronym);
 		setDescription(description);
 		setFundingDuration(fundingDuration);
@@ -37,8 +39,8 @@ public class Project implements Serializable {
 		setCreated(new Date());
 		setOwner(owner);
 		setCategory(category);
-		setEvaluations(new ArrayList<>());
-		setDocuments(new ArrayList<>());
+
+		setDocuments();
 		setCreated(created);
 	}
 
@@ -72,20 +74,21 @@ public class Project implements Serializable {
 			setCreated(new Date());
 			setOwner(owner);
 			setCategory(categoryP);
-			setEvaluations(new ArrayList<>());
-			setDocuments(new ArrayList<>());
+			setEvaluations();
+			setDocuments();
 			setCreated(created);
 			
 		} catch (InvalidDataException e) {
 			e.printStackTrace();
 		}
 	}
-	public void setDocuments(ArrayList<Document> documents) {
-		this.documents = documents;
+	public void setDocuments() {
+		this.documents = DocumentDB.getDocumentByProjectId(projectId);
 	}
 
-	private void setEvaluations(ArrayList<Evaluation> evaluations) {
-		this.evaluations = evaluations;
+	private void setEvaluations() {
+		ArrayList<Evaluation> testEvaluation = EvaluationDB.getEvalByProjID(projectId);
+		this.evaluations = (ArrayList<Evaluation>) EvaluationDB.getEvalByProjID(projectId).clone();
 	}
 
 	public String getAcronym() {
@@ -164,10 +167,10 @@ public class Project implements Serializable {
 
 	public void addEvaluation(Evaluation eval) {
 		evaluations.add(eval);
-		eval.setProject(this);
+		
 	}
 
-	public List<Evaluation> getEvaluations() {
+	public ArrayList<Evaluation> getEvaluations() {
 		return evaluations;
 	}
 	
