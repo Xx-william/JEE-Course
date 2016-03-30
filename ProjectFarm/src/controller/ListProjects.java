@@ -12,17 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import model.ListProjectsPage;
+import model.Project;
 import model.db.ProjectDB;
 
 @WebServlet("/controller/ListProjects")
 public class ListProjects extends HttpServlet{
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		ArrayList<ListProjectsPage> listProjectsPages = new ArrayList<ListProjectsPage>();
-		listProjectsPages = ProjectDB.getListProjectPage();
+		ArrayList<Project> projects = new ArrayList<Project>();
+		projects = ProjectDB.getAllProjects();
 		
 		Gson gson = new Gson();
-		String json = gson.toJson(listProjectsPages);
+		String json = gson.toJson(projects);
 		
 		req.setAttribute("projects", json);
 		

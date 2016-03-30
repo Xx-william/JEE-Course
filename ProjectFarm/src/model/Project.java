@@ -26,12 +26,13 @@ public class Project implements Serializable {
 	private Date created;
 	private Owner owner;
 	private Category category;
+	private double risk = 0;
+	private double attractiveness = 0;
 	private ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
 	private ArrayList<Document> documents = new ArrayList<Document>();
 
 	public Project(String acronym, String description, int fundingDuration,
-			double budget, Owner owner, Category category,Date created) throws InvalidDataException {
-		
+			double budget, Owner owner, Category category,Date created) throws InvalidDataException {	
 		setAcronym(acronym);
 		setDescription(description);
 		setFundingDuration(fundingDuration);
@@ -39,8 +40,6 @@ public class Project implements Serializable {
 		setCreated(new Date());
 		setOwner(owner);
 		setCategory(category);
-
-		setDocuments();
 		setCreated(created);
 	}
 
@@ -74,21 +73,28 @@ public class Project implements Serializable {
 			setCreated(new Date());
 			setOwner(owner);
 			setCategory(categoryP);
-			setEvaluations();
-			setDocuments();
 			setCreated(created);
 			
 		} catch (InvalidDataException e) {
 			e.printStackTrace();
 		}
 	}
-	public void setDocuments() {
-		this.documents = DocumentDB.getDocumentByProjectId(projectId);
+	public void setDocuments(ArrayList<Document> documents) {
+		this.documents = documents;
 	}
 
-	private void setEvaluations() {
-		ArrayList<Evaluation> testEvaluation = EvaluationDB.getEvalByProjID(projectId);
-		this.evaluations = (ArrayList<Evaluation>) EvaluationDB.getEvalByProjID(projectId).clone();
+	public void setEvaluations(ArrayList<Evaluation> evaluations) {
+		if(!evaluations.isEmpty()){
+			double temptRisk = 0;
+			double temptAttrac = 0;
+			for(Evaluation evaluation : evaluations){
+				temptRisk += evaluation.getRiskLevel();
+				temptAttrac += evaluation.getAttractiveness();
+			}
+			setRisk(temptRisk / evaluations.size());
+			setAttractiveness(temptAttrac / evaluations.size());
+		}	
+		this.evaluations = evaluations;
 	}
 
 	public String getAcronym() {
@@ -166,8 +172,11 @@ public class Project implements Serializable {
 	}
 
 	public void addEvaluation(Evaluation eval) {
-		evaluations.add(eval);
-		
+		double temptRisk = eval.getRiskLevel();
+		double temptAttrac = eval.getAttractiveness();		
+		setRisk((this.risk + temptRisk) / 2);
+		setAttractiveness((this.attractiveness + temptAttrac) / 2);
+		evaluations.add(eval);		
 	}
 
 	public ArrayList<Evaluation> getEvaluations() {
@@ -178,7 +187,7 @@ public class Project implements Serializable {
 		documents.add(doc);
 	}
 	
-	public List<Document> getDocuments() {
+	public ArrayList<Document> getDocuments() {
 		return documents;
 	}
 	public void setProjectId(int projectId){
@@ -187,5 +196,16 @@ public class Project implements Serializable {
 	public int getProjectId(){
 		return this.projectId;
 	}
-
+	public double getRisk(){
+		return this.risk;
+	}
+	public double getAttractiveness(){
+		return this.attractiveness;
+	}
+	private void setRisk(double risk){
+		this.risk = risk;
+	}
+	private void setAttractiveness(double attractiveness){
+		this.attractiveness = attractiveness;
+	}
 }

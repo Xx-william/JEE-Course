@@ -7,8 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Collection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -31,15 +30,17 @@ public class UploadFile extends HttpServlet {
 		final String path = getServletContext().getInitParameter("file-upload");
 		final Part filePart = request.getPart("fileUpload");
 		final String fileName = getFileName(filePart);
-
+		
 		OutputStream out = null;
 		InputStream filecontent = null;
 		final PrintWriter out1 = response.getWriter();
 
+
+		
 		try {
 			out = new FileOutputStream(new File(path + File.separator + fileName));
 			filecontent = filePart.getInputStream();
-
+			
 			int read = 0;
 			final byte[] bytes = new byte[1024];
 
@@ -48,7 +49,8 @@ public class UploadFile extends HttpServlet {
 			}
 			System.out.println("New file " + fileName + " created at " + path);
 			
-		
+//			Document document = new Document(path,projectId);
+//			DocumentDB.saveDocument(document);
 			String outString = "{ \"isSuccess\" : \"true\"}";
 			out1.println(outString);
 			

@@ -5,10 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-import model.Category;
-import model.ListProjectsPage;
+import model.Document;
+import model.Evaluation;
 import model.Owner;
 import model.Project;
 import model.db.exception.DatabaseAccessError;
@@ -17,8 +16,8 @@ public class ProjectDB {
 	private static String SAVE_PROJECT = "INSERT INTO project(project_description,project_fundingDuration,project_budget,project_created,project_owner,project_category,project_acronym) values(?,?,?,?,?,?,?)";
 	private static String GET_PROJECT_BY_ID = "SELECT * FROM project WHERE project_id = ?";
 	private static String GET_PROJECTSOFOWNER = "SELECT * FROM project WHERE project_owner = ?";
-	private static String GET_ALLPROJECTS = "SELECT * FROM project";
 	private static String GET_EVALUATIONS_IDS_OF_PROJECT = "SELECT evaluation_id FROM evaluation WHERE project_id = ?";
+	private static String GET_ALL_PROJECTS = "SELECT * FROM project";
 //	private static Map<String, Project> projects;
 
 	// static {
@@ -75,6 +74,9 @@ public class ProjectDB {
 			String createdStr = rs.getString("project_created");
 			String ownerStr = rs.getString("project_owner");
 			String categoryName = rs.getString("project_category");
+		    
+			ArrayList<Document> documents = DocumentDB.getDocumentByProjectId(projectId);
+			ArrayList<Evaluation> evaluations = EvaluationDB.getEvalByProjID(projectId);
 			
 //			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 //			Date created = sdf.parse(createdStr);
@@ -82,7 +84,9 @@ public class ProjectDB {
 //			Category category = CategoryDB.getCategory(categoryName);
 			
 			 project = new Project(projectId,acronym, description, fundingDuration, budget, ownerStr,  categoryName , createdStr);
-			
+			 project.setEvaluations(evaluations);
+			 project.setDocuments(documents);
+			 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
@@ -154,6 +158,11 @@ public class ProjectDB {
 				String ownerEmail = owner.getEmail();
 				Project project = new Project( projectId, title, description, fundingDuration, budget,  ownerEmail,  category, created);
 				project.setProjectId(rs.getInt("project_id"));
+				
+				ArrayList<Evaluation> evaluations = EvaluationDB.getEvalByProjID(projectId);
+				ArrayList<Document> documents = DocumentDB.getDocumentByProjectId(projectId);
+				project.setEvaluations(evaluations);
+				project.setDocuments(documents);
 				projects.add(project);
 			}
 		} catch (Exception e) {
@@ -168,34 +177,32 @@ public class ProjectDB {
 		return projects;
 	}
 
-	public static ArrayList<ListProjectsPage> getListProjectPage() {
-		ArrayList<ListProjectsPage> listProjectsPages = new ArrayList<ListProjectsPage>();
+	public static ArrayList<Project> getAllProjects(){
+		ArrayList<Project> projects = new ArrayList<Project>();
 		Connection conn = null;
-		try {
+		
+		try{
 			conn = DBUtil.getConnection();
-			PreparedStatement stmt = conn.prepareStatement(GET_ALLPROJECTS);
-			ResultSet rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				int projectId = rs.getInt("project_id");
-				String acronym = rs.getString("project_acronym");
-				String category = rs.getString("project_category");
-				int incubation = rs.getInt("project_fundingDuration");
+			PreparedStatement stmt = conn.prepareStatement(GET_ALL_PROJECTS);
+			ResultSet rs = stmt.executeQuery();			
+			while(rs.next()){				
+				int projectId = rs.getInt("project_id");				
+				String title = rs.getString("project_acronym");
+				String description = rs.getString("project_description");
 				double budget = rs.getDouble("project_budget");
-				stmt = conn.prepareStatement(GET_EVALUATIONS_IDS_OF_PROJECT);
-				stmt.setInt(1, rs.getInt("project_id"));
-
-				ResultSet rs2 = stmt.executeQuery();
-				int numEvaluations = 0;
-				while (rs2.next()) {
-					numEvaluations++;
-				}
-				ListProjectsPage listProjectPage = new ListProjectsPage(projectId,acronym, category, incubation, budget,
-						numEvaluations);
-				listProjectsPages.add(listProjectPage);
+				String created = rs.getString("project_created");
+				String category = rs.getString("project_category");
+				int fundingDuration = rs.getInt("project_fundingDuration");
+				String ownerEmail = rs.getString("project_owner");
+				Project project = new Project( projectId, title, description, fundingDuration, budget,  ownerEmail,  category, created);
+				project.setProjectId(rs.getInt("project_id"));				
+				ArrayList<Evaluation> evaluations = EvaluationDB.getEvalByProjID(projectId);
+				ArrayList<Document> documents = DocumentDB.getDocumentByProjectId(projectId);
+				project.setEvaluations(evaluations);
+				project.setDocuments(documents);
+				projects.add(project);
 			}
-
-		} catch (Exception e) {
+		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
 			try{
@@ -204,9 +211,7 @@ public class ProjectDB {
 				e.printStackTrace();
 			}
 		}
-		return listProjectsPages;
+		return projects;
 	}
-	// public static List<Project> getAllProjects(){
-	// }
 
 }

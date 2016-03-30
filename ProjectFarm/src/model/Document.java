@@ -10,14 +10,22 @@ public class Document implements Serializable {
 
 	private static final long serialVersionUID = 3404763898326246494L;
 	
+	private int projectId;
 	private String documentPath;
 	private Date added;
 	
-	public Document(String documentPath) throws InvalidDataException {
+	public Document(String documentPath,int projectId) throws InvalidDataException {
 		setDocumentPath(documentPath);
 		setAdded(new Date());
+		setProjectId(projectId);
 	}
 
+	public void setProjectId(int projectId){
+		this.projectId = projectId;
+	}
+	public int getProjectId(){
+		return this.projectId;
+	}
 	public String getDocumentPath() {
 		return documentPath;
 	}

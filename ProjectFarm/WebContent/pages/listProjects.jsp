@@ -4,7 +4,7 @@
 <%@ page import="java.lang.reflect.Type"%>
 <%@ page import="com.google.gson.reflect.TypeToken"%>
 <%@ page import="com.google.gson.Gson"%>
-<%@ page import="model.ListProjectsPage" %>
+<%@ page import="model.Project" %>
 <jsp:include page="/utils/header.jsp"></jsp:include>
 
 <div class="row">
@@ -22,20 +22,19 @@
 			</thead>
 			<tbody>
 			<%
-				ArrayList<ListProjectsPage> listProjectsPages = new ArrayList<ListProjectsPage>();
 				String json = (String)request.getAttribute("projects");
 				Gson gson = new Gson();
-				 Type collectionType = new TypeToken<ArrayList<ListProjectsPage>>(){}.getType();
-				 ArrayList<ListProjectsPage> projects = gson.fromJson(json, collectionType);
+				 Type collectionType = new TypeToken<ArrayList<Project>>(){}.getType();
+				 ArrayList<Project> projects = gson.fromJson(json, collectionType);
 				 
-				 for(ListProjectsPage project : projects){
+				 for(Project project : projects){
 					 %> 
 				    	<tr>
 				    	<td><%=project.getAcronym() %> </td>
-				    	<td><%=project.getCategory() %> </td>
-				    	<td><%=project.getIncubation() %> </td>
+				    	<td><%=project.getCategory().getDescription() %> </td>
+				    	<td><%=project.getFundingDuration() %> </td>
 				    	<td><%=project.getBudget() %> </td>
-				    	<td><%=project.getNumEvaluations() %> </td>
+				    	<td><%=project.getEvaluations().size() %> </td>
 				    	<td><a class="btn btn-primary" href="<%=request.getContextPath() %>/controller/Evaluate?projectId=<%=project.getProjectId()%>">Evaluate</a></td>
 				    	<%
 				 }

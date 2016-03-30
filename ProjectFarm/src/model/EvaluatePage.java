@@ -14,17 +14,18 @@ public class EvaluatePage {
 	private double budget;
 	private ArrayList<String> documents = new ArrayList<String>();
 	
-	public EvaluatePage(int projectId,String acronym,Date created,String description,
-			Category category, int incubation, double budget, ArrayList<Document> documents){
-		setProjectId(projectId);
-		setAcronym(acronym);
-		setCreated(created);
-		setDescription(description);
-		setCategory(category);
-		setIncubation(incubation);
-		setBudget(budget);
-		setDocuments(documents);
+	public EvaluatePage(Project project){
+		setProjectId(project.getProjectId());
+		setAcronym(project.getAcronym());
+		setCreated(project.getCreated());
+		setDescription(project.getDescription());
+		setCategory(project.getCategory());
+		setIncubation(project.getFundingDuration());
+		setBudget(project.getBudget());
+		setDocuments(project.getDocuments());
 	}
+	
+
 	
 	public void setProjectId(int projectId){
 		this.projectId = projectId;

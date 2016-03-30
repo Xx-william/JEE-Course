@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ page import="model.EvaluatePage" %>
+    <%@ page import="model.Project" %>
+     <%@ page import="model.Document" %>
     <%@ page import="java.lang.reflect.Type"%>
 <%@ page import="com.google.gson.reflect.TypeToken"%>
 <%@ page import="com.google.gson.Gson"%>
@@ -18,38 +19,38 @@
 			<% 
 			String json = (String)request.getAttribute("project");
 			Gson gson = new Gson();
-			 Type collectionType = new TypeToken<EvaluatePage>(){}.getType();
-			 EvaluatePage evaluatePage = gson.fromJson(json, collectionType);
+			 Type collectionType = new TypeToken<Project>(){}.getType();
+			 Project project = gson.fromJson(json, collectionType);
 			%>
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-xs-6">
 						<h4>Acronym:</h4>
-						<h4><%= evaluatePage.getAcronym()%></h4>
+						<h4><%= project.getAcronym()%></h4>
 					</div>
 					<div class="col-xs-6">
 						<h4>created:</h4>
-						<h4><%= evaluatePage.getCreated()%></h4>
+						<h4><%= project.getCreated()%></h4>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-12">
 						<h4>Description:</h4>
-						<p><%= evaluatePage.getDescription()%></p>
+						<p><%= project.getDescription()%></p>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-4">
 						<h4>Category:</h4>
-						<h4><%= evaluatePage.getCategory()%></h4>
+						<h4><%= project.getCategory().getDescription()%></h4>
 					</div>
 					<div class="col-xs-4">
 						<h4>Incubation # of days:</h4>
-						<h4><%= evaluatePage.getIncubation()%></h4>
+						<h4><%= project.getFundingDuration()%></h4>
 					</div>
 					<div class="col-xs-4">
 						<h4>Budget:</h4>
-						<h4><%= evaluatePage.getBudget()%></h4>
+						<h4><%= project.getBudget()%></h4>
 					</div>
 				</div>
 
@@ -59,24 +60,28 @@
 					<div class="col-xs-8">
 						<h4>Documents:</h4>						
 						<% 
-						ArrayList<String> documents = new ArrayList<String>(evaluatePage.getDocuments());
+						ArrayList<Document> documents = new ArrayList<Document>(project.getDocuments());
+						int projectId = project.getProjectId();
 						if(!documents.isEmpty()){
-						for(String path : documents) {
+						for(Document document : documents) {
+							
 							%>
 							<h4>
-							<a><%=path%></a>
+							<a><%=document.getDocumentPath()%></a>
 							</h4>
 							<% 
 						}	}					
 						%>
 					</div>
-					
+					<!-- Owner : BEGIN -->
 					<%
+					
 					if(request.getSession().getAttribute("type") == "Owner"){
 						%>
 							<div class="col-xs-4">
 								<form id="upload">
 									<input type="file" name="fileUpload">
+									
 									<button type="submit" class="btn btn-default">Submit</button>
 								</form>
 								<div id="uploadResponse"></div>
@@ -84,13 +89,13 @@
 						<%
 					}
 						%>
+						<!--  Owner : END -->
 					<script>
-					var formData = new FormData();
 					$('#upload').validator().on('submit', function (e) {
-						  if (e.isDefaultPrevented()) {
+						
+						if (e.isDefaultPrevented()) {
 						    // handle the invalid form...
 						  } else {
-							  var form = $('#upload');
 								$.ajax({type : "POST",
 									url : "/ProjectFarm/controller/UploadFile",
 									 cache: false,
@@ -116,6 +121,7 @@
 				</div>
 
 				<hr>
+				<!--  Evaluator : BEGIN -->
 				<%if(request.getSession().getAttribute("type") == "Evaluator") {%>
 				<div class="row">
 					<div class="col-xs-12">
@@ -159,7 +165,7 @@
 										data : {
 											attractiveness: $("#attractiveness").val(),
 												risk: $("#risk").val(),
-												projectId: <%= evaluatePage.getProjectId()%>
+												projectId: <%= project.getProjectId()%>
 										},									
 										success : function(data) {
 										if (data.isSuccess == "false") {
@@ -180,24 +186,29 @@
 						</script>
 					</div>
 				</div>
-				
+				<!--  Evaluator : END -->
 				<%} else{ %>
+				<!-- Owner : BEGIN -->
 				<div class="row">
+				<div class="col-xs-12">
 				<h4>Statistics</h4>
+				</div>
+				
 					<div class="col-xs-4">
 						<h4>Risk Level:</h4>
-						<h4>test0</h4>
+						<h4><%= project.getRisk()%></h4>
 					</div>		
 					<div class="col-xs-4">
 						<h4>Attractiveness:</h4>
-						<h4>test0</h4>
+						<h4><%= project.getAttractiveness()%></h4>
 					</div>	
 					<div class="col-xs-4">
 						<h4>#of evaluators</h4>
-						<h4>test0</h4>
+						<h4><%= project.getEvaluations().size() %></h4>
 					</div>			
 				</div>				
 				<%} %>
+				<!-- Owner : END -->
 				<div id="ajaxResponse"></div>
 			</div>
 

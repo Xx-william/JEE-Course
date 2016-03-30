@@ -14,8 +14,10 @@ import com.google.gson.Gson;
 
 import model.Document;
 import model.EvaluatePage;
+import model.Evaluation;
 import model.Project;
 import model.db.DocumentDB;
+import model.db.EvaluationDB;
 import model.db.ProjectDB;
 
 @WebServlet("/controller/Evaluate")
@@ -25,15 +27,17 @@ public class Evaluate extends HttpServlet{
 	}
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/pages/evaluate.jsp");
-		String projectIdStr =(String) req.getParameter("projectId");		
-		int projectId = Integer.parseInt(projectIdStr);
-		Project project = ProjectDB.getProject(projectId);		
-		ArrayList<Document> documents = DocumentDB.getDocumentByProjectId(projectId);
+		String projectIdStr =(String) req.getParameter("projectId");	
 		
-		EvaluatePage evaluatePage = new EvaluatePage(project.getProjectId(),project.getAcronym(),project.getCreated(),project.getDescription(),
-		project.getCategory(), project.getFundingDuration(), project.getBudget(),documents);		
+		int projectId = Integer.parseInt(projectIdStr);
+		Project project = ProjectDB.getProject(projectId);			
+		ArrayList<Document> documents = DocumentDB.getDocumentByProjectId(projectId);
+		project.setDocuments(documents);
+		ArrayList<Evaluation> evaluations = EvaluationDB.getEvalByProjID(projectId);
+		project.setEvaluations(evaluations);
+			
 		Gson gson = new Gson();
-		String json = gson.toJson(evaluatePage);		
+		String json = gson.toJson(project);		
 		req.setAttribute("project", json);
 		dispatcher.forward(req, resp);
 	}

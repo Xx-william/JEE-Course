@@ -28,16 +28,16 @@
    <%
    	String json = (String)request.getAttribute("projects");
     Gson gson = new Gson();
-    Type collectionType = new TypeToken<ArrayList<MyProjectPage>>(){}.getType();
-    ArrayList<MyProjectPage> projects = gson.fromJson(json, collectionType);
+    Type collectionType = new TypeToken<ArrayList<Project>>(){}.getType();
+    ArrayList<Project> projects = gson.fromJson(json, collectionType);
       
-    for(MyProjectPage project : projects){
+    for(Project project : projects){
     	%> 
     	<tr>
 		<td><a href="<%=request.getContextPath() %>/controller/Evaluate?projectId=<%=project.getProjectId()%>"><%=project.getAcronym()%></a></td>
     	
-    	<td><%=project.getCategory() %> </td>
-    	<td><%=project.getIncubation() %> </td>
+    	<td><%=project.getCategory().getDescription() %> </td>
+    	<td><%=project.getFundingDuration() %> </td>
     	<td><%=project.getBudget() %> </td>
     	<%
     		double risk = project.getRisk();
@@ -64,7 +64,7 @@
     		}
     	%>
     	<td style="background-color: <%=attractiveColor%>"><%=project.getAttractiveness() %> </td>
-    	<td><%=project.getNumEvaluators() %> </td>
+    	<td><%=project.getEvaluations().size() %> </td>
     	</tr>
     	<% } %>
 </tbody>

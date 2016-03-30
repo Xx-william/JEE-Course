@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -13,9 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import model.MyProjectPage;
 import model.Owner;
 import model.Project;
 import model.db.ProjectDB;
@@ -33,14 +30,11 @@ public class MyProjects extends HttpServlet {
 		ArrayList<Project> projects = new ArrayList<Project>();
 		
 		
-		projects = (ArrayList<Project>) ProjectDB.getProjectsOfOwner(owner).clone();
-		ArrayList<MyProjectPage> myProjectPages = new ArrayList<MyProjectPage>();
-		for(Project project : projects){
-			myProjectPages.add(new MyProjectPage(project));
-		}
+		projects =  ProjectDB.getProjectsOfOwner(owner);
+		
 		
 		Gson gson = new Gson();
-		String json = gson.toJson(myProjectPages);
+		String json = gson.toJson(projects);
 
 		req.setAttribute("projects", json);
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/pages/myProjects.jsp");
