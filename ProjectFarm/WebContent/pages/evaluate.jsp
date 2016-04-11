@@ -58,7 +58,7 @@
 
 				<div class="row">
 					<div class="col-xs-8">
-						<h4>Documents:</h4>						
+						<h4 id="documents">Documents:</h4>						
 						<% 
 						ArrayList<Document> documents = new ArrayList<Document>(project.getDocuments());
 						int projectId = project.getProjectId();
@@ -67,7 +67,7 @@
 							
 							%>
 							<h4>
-							<a><%=document.getDocumentPath()%></a>
+							<a href="<%=document.getDocumentPath()%>"><%=document.getDocumentName()%></a>
 							</h4>
 							<% 
 						}	}					
@@ -79,10 +79,9 @@
 					if(request.getSession().getAttribute("type") == "Owner"){
 						%>
 							<div class="col-xs-4">
-								<form id="upload">
-									<input type="file" name="fileUpload">
-									
-									<button type="submit" class="btn btn-default">Submit</button>
+								<form id="upload" >
+									<input type="file" name="file" id = "file">
+									<button type="submit" class="btn btn-default" ">Submit</button>
 								</form>
 								<div id="uploadResponse"></div>
 							</div>
@@ -90,16 +89,21 @@
 					}
 						%>
 						<!--  Owner : END -->
-					<script>
+						<script>
 					$('#upload').validator().on('submit', function (e) {
-						
+						var formData = new FormData();
+						var fileName = 
+						 formData.append('projectId',<%= project.getProjectId() %>);
+						  formData.append('file',document.getElementById("file").files[0]);
+						 
 						if (e.isDefaultPrevented()) {
 						    // handle the invalid form...
 						  } else {
-								$.ajax({type : "POST",
+								$.ajax({
+									type : "POST",
 									url : "/ProjectFarm/controller/UploadFile",
 									 cache: false,
-									    data: new FormData($('#upload')[0]),
+									    data: formData,									    	 
 									    processData: false,
 									    contentType: false,							
 									success : function(data) {
@@ -109,6 +113,7 @@
 									} else if (data.isSuccess == "true") {
 										$("#uploadResponse").append("<div class='alert alert-success' role='alert'>Your document has been uploaded</div>");
 										}
+								
 									},
 									error : function() {
 											$("#uploadResponse").append("<h1>fails</h1>");
@@ -118,6 +123,8 @@
 						  }
 						})	
 					</script>
+						
+											
 				</div>
 
 				<hr>

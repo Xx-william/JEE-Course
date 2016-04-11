@@ -30,6 +30,10 @@ public class Document implements Serializable {
 		return documentPath;
 	}
 
+	public String getDocumentName(){
+		String[] filename = documentPath.split("/");
+		return filename[6];
+	}
 	public void setDocumentPath(String documentPath) throws InvalidDataException {
 		File file = new File(documentPath);
 		

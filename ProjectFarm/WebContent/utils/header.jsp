@@ -15,7 +15,7 @@
 <script src="/ProjectFarm/ETC/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
 <script src="/ProjectFarm/ETC/Bootstrap-validator/validator.min.js"></script>
 <script
-	src="/ProjectFarm/ETC/bootstrap-select/js/bootstrap-select.min.js"></script>
+	src="/ProjectFarm/ETC/bootstrap-select/js/bootstrap-select.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-default">

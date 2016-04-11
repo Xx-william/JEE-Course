@@ -4,7 +4,6 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.Project" %>
 <%@ page import="java.lang.reflect.Type" %>
-<%@ page import="model.MyProjectPage" %>
 <%@ page import="com.google.gson.reflect.TypeToken" %>
 <%@ page import="com.google.gson.Gson" %>
 <jsp:include page="/utils/header.jsp"></jsp:include>
