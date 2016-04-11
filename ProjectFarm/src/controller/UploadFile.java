@@ -15,7 +15,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -25,111 +24,102 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import model.Document;
 import model.db.DocumentDB;
 
-
-
-
-
 @WebServlet("/controller/UploadFile")
 @MultipartConfig
 public class UploadFile extends HttpServlet {
-
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		response.setContentType("application/json");
 		OutputStream out = null;
 		final PrintWriter out1 = response.getWriter();
 		final String path = getServletContext().getInitParameter("file-upload");
 		int projectId = -1;
-		
-		 String ajaxUpdateResult = "";
 
-	        try {
+		String ajaxUpdateResult = "";
 
-	            List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);            
+		try {
 
-	            for (FileItem item : items) {
+			List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
 
-	                if (item.isFormField()) {
+			for (FileItem item : items) {
 
-	                	String projectIdStr = item.getString();
-	                	projectId = Integer.parseInt(projectIdStr);
+				if (item.isFormField()) {
 
-	                } else {
+					String projectIdStr = item.getString();
+					projectId = Integer.parseInt(projectIdStr);
 
-	                    String fileName = item.getName();
+				} else {
 
-	                    InputStream filecontent = item.getInputStream();
-	                    String folderPath = path + File.separator + projectId;
-	                    String filePath = folderPath + File.separator + fileName;
-	            		try {
-	            			File filetempt = new File(folderPath);
-	        				if(!filetempt.exists()){
-	        					try{
-	        						filetempt.mkdir();
-	        					}catch (Exception e){
-	        						e.printStackTrace();
-	        					}	        					
-	        				}
-	        				
-	        			out = new FileOutputStream(new File(filePath));
-	        			
-	        
-	        			int read = 0;
-	        			final byte[] bytes = new byte[1024];
-	        
-	        			while ((read = filecontent.read(bytes)) != -1) {
-	        				out.write(bytes, 0, read);
-	        			}
-	        			
-	        			System.out.println("New file " + fileName + " created at " + path);
-	        			try{	        				
-	        				Document document = new Document(filePath,projectId);
-		        			 DocumentDB.saveDocument(document);
-	        			}catch (Exception e){
-	        				System.out.println(e.getMessage());
-	        			}
-	        			 
-	        			String outString = "{ \"isSuccess\" : \"true\"}";
-	        			out1.println(outString);
-	        
-	        		} catch (FileNotFoundException fne) {
-	        			System.out.println("You either did not specify a file to upload or are "
-	        					+ "trying to upload a file to a protected or nonexistent " + "location.");
-	        			System.out.println("<br/> ERROR: " + fne.getMessage());
-	        
-	        			String outString = "{ \"isSuccess\" : \"false\"}";
-	        			out1.println(outString);
-	        		} finally {
-	        			if (out != null) {
-	        				out.close();
-	        			}
-	        			if (filecontent != null) {
-	        				filecontent.close();
-	        			}
-	        			if (out1 != null) {
-	        				out1.close();
-	        			}
-	        		}
-	                    
-	                    
+					String fileName = item.getName();
 
-	                   // System.out.println(Streams.asString(content));
+					InputStream filecontent = item.getInputStream();
+					String folderPath = path + File.separator + projectId;
+					String filePath = folderPath + File.separator + fileName;
+					try {
+						File filetempt = new File(folderPath);
+						if (!filetempt.exists()) {
+							try {
+								filetempt.mkdir();
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
 
-	                    ajaxUpdateResult += "File " + fileName + " is successfully uploaded\n\r";
-	                    
-	                }
+						out = new FileOutputStream(new File(filePath));
 
-	            }
-	            
-	            System.out.println(ajaxUpdateResult);
-	        } catch (FileUploadException e) {
+						int read = 0;
+						final byte[] bytes = new byte[1024];
 
-	            throw new ServletException("Parsing file upload failed.", e);
+						while ((read = filecontent.read(bytes)) != -1) {
+							out.write(bytes, 0, read);
+						}
 
-	        }
+						System.out.println("New file " + fileName + " created at " + path);
+						try {
+							Document document = new Document(filePath, projectId);
+							DocumentDB.saveDocument(document);
+						} catch (Exception e) {
+							System.out.println(e.getMessage());
+						}
 
+					
+						String outString = "{ \"isSuccess\" : \"true\"}";
+						out1.println(outString);
+
+					} catch (FileNotFoundException fne) {
+						System.out.println("You either did not specify a file to upload or are "
+								+ "trying to upload a file to a protected or nonexistent " + "location.");
+						System.out.println("<br/> ERROR: " + fne.getMessage());
+
+						String outString = "{ \"isSuccess\" : \"false\"}";
+						out1.println(outString);
+					} finally {
+						if (out != null) {
+							out.close();
+						}
+						if (filecontent != null) {
+							filecontent.close();
+						}
+						if (out1 != null) {
+							out1.close();
+						}
+					}
+
+					// System.out.println(Streams.asString(content));
+
+					ajaxUpdateResult += "File " + fileName + " is successfully uploaded\n\r";
+
+				}
+
+			}
+
+			System.out.println(ajaxUpdateResult);
+		} catch (FileUploadException e) {
+
+			throw new ServletException("Parsing file upload failed.", e);
+
+		}
 
 	}
-
 
 }

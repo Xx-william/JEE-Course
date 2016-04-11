@@ -67,7 +67,7 @@
 							
 							%>
 							<h4>
-							<a href="<%=document.getDocumentPath()%>"><%=document.getDocumentName()%></a>
+							<a href="<%=request.getContextPath()%>/controller/GetDocument?documentId=<%=document.getDocumentId()%>"><%=document.getDocumentName()%></a>
 							</h4>
 							<% 
 						}	}					
@@ -92,9 +92,10 @@
 						<script>
 					$('#upload').validator().on('submit', function (e) {
 						var formData = new FormData();
-						var fileName = 
+						var file = document.getElementById("file").files[0];
+						var fileName =file.name;
 						 formData.append('projectId',<%= project.getProjectId() %>);
-						  formData.append('file',document.getElementById("file").files[0]);
+						  formData.append('file',file);
 						 
 						if (e.isDefaultPrevented()) {
 						    // handle the invalid form...
@@ -111,9 +112,12 @@
 										$("#uploadResponse").append("<div class='alert alert-danger' role='alert'>"
 											+ data.errorMessage + "</div>");
 									} else if (data.isSuccess == "true") {
-										$("#uploadResponse").append("<div class='alert alert-success' role='alert'>Your document has been uploaded</div>");
+										$("#uploadResponse").append("<div class='alert alert-success' role='alert'>Your document has been uploaded,if your want to download this file, please refresh this page</div>");
+										
+										$("#documents").append("<h4>"+fileName+" </h4>");
+										
 										}
-								
+									
 									},
 									error : function() {
 											$("#uploadResponse").append("<h1>fails</h1>");

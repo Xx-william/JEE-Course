@@ -9,7 +9,7 @@ import model.exception.InvalidDataException;
 public class Document implements Serializable {
 
 	private static final long serialVersionUID = 3404763898326246494L;
-	
+	private int documentId;
 	private int projectId;
 	private String documentPath;
 	private Date added;
@@ -20,6 +20,12 @@ public class Document implements Serializable {
 		setProjectId(projectId);
 	}
 
+	public void setDocumentId(int id){
+		this.documentId = id;
+	}
+	public int getDocumentId(){
+		return this.documentId;
+	}
 	public void setProjectId(int projectId){
 		this.projectId = projectId;
 	}
@@ -31,8 +37,13 @@ public class Document implements Serializable {
 	}
 
 	public String getDocumentName(){
-		String[] filename = documentPath.split("/");
-		return filename[6];
+		String[] filenames = documentPath.split("/");
+		String filename = "";
+		for(String filenametempt : filenames){
+			filename = filenametempt;
+		}
+	
+		return filename;
 	}
 	public void setDocumentPath(String documentPath) throws InvalidDataException {
 		File file = new File(documentPath);
