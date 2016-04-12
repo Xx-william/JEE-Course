@@ -107,12 +107,17 @@
 						}
 						
 						} else {
+							String errorStr = (String) request.getAttribute("error");
+							if(errorStr == null){
+								errorStr = "";
+							}
 				%>
 				<!-- IF user did not log in -->
 				<form class="navbar-form form-inline" method="post"
-					action="/ProjectFarm/controller/LogIn" data-toggle="validator"
-					role="from" id="loginForm">
-					<div class="form-group">
+					 data-toggle="validator"
+					 action="/ProjectFarm/controller/LogIn"
+					role="form" id="loginForm">
+					<div class="form-group" >
 						<label for="logAccount" class="control-label">E-mail</label> <input
 							type="email" class="form-control" id="logAccount"
 							placeholder="E-Mail" name="email" required>
@@ -123,6 +128,7 @@
 							placeholder="Password" name="password" required>
 					</div>
 					<button type="submit" class="btn btn-default">Log in</button>
+					<div><h6 style="color: red"><%=errorStr%></h6></div>			
 				</form>
 				<%
 					}
@@ -133,6 +139,7 @@
 		</div>
 		<!-- /.navbar-collapse -->
 	</div>
-	<!-- /.container-fluid --> </nav>
+	<!-- /.container-fluid --> 
+	</nav>
 
 	<!-- body,html tags are still opend -->
