@@ -165,10 +165,11 @@
 							</div>
 							<hr>
 							<button id="formSubmit" class="btn btn-default" type="submit">Save</button>
-							<button class="btn btn-default">Discard</button>
+							
 						</form>
 						
 						<script>
+						
 						$('#optionForm').validator().on('submit', function (e) {
 							  if (e.isDefaultPrevented()) {
 							    // handle the invalid form...

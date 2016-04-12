@@ -86,21 +86,20 @@
           <hr>
 
           <button id="formSubmit" class="btn btn-default" type="submit">Save</button>
-          <button class="btn btn-default">Discard</button>
+          <button class="btn btn-default" type="button" id="discard">Discard</button>
           <div id="ajaxResponse"></div>
         </form>
+        
         <script>
-          $('#newProjectForm')
-          .validator()
-          .on(
-          'submit',
-          function(e) {
+        $('#discard').click(function(){
+        	document.getElementById("newProjectForm").reset();
+        });
+          $('#newProjectForm').validator().on('submit',function(e) {
             if (e.isDefaultPrevented()) {
               // handle the invalid form...
             } else {
               var form = $('#newProjectForm');
-              $
-              .ajax({
+              $.ajax({
                 type : "POST",
                 url : "/ProjectFarm/controller/NewProject",
 
@@ -115,23 +114,17 @@
 
                   success : function(data) {
                     if (data.isSuccess == "false") {
-                      $(
-                      "#ajaxResponse")
-                      .append(
+                      $("#ajaxResponse").append(
                       "<hr> <div class='alert alert-danger' role='alert'>"
                       + data.errorMessage
                       + "</div>");
                     } else if (data.isSuccess == "true") {
-                      $(
-                      "#ajaxResponse")
-                      .append(
+                      $("#ajaxResponse").append(
                       "<hr><div class='alert alert-success' role='alert'>New project has been created</div>");
                     }
                     },
                     error : function() {
-                      $("#ajaxResponse")
-                      .append(
-                      "<h1>fails</h1>");
+                      $("#ajaxResponse").append("<h1>fails</h1>");
                     }
                     });
                     return false;
