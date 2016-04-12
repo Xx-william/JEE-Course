@@ -41,6 +41,12 @@ In this project, we will use
 * [JQuery] 
 * [Ajax] 
 * [BootStrap] 
+* [Font-Awesome]
+
+And we used some of the open source projects at GitHub.
+* [bootstrap-select] 
+* [bootstrap-validator]
+
 
 And of course this project itself is open source with a [public repository]
 on GitHub.
@@ -75,8 +81,8 @@ MIT
 [JQuery]: <https://jquery.com/>
 [Ajax]: <http://api.jquery.com/jquery.ajax/>
 [BootStrap]: <http://getbootstrap.com/>
-
-
-
+[bootstrap-select]: <https://github.com/silviomoreto/bootstrap-select>
+[bootstrap-validator]: <https://github.com/1000hz/bootstrap-validator>
+[Font-Awesome]:  <https://fortawesome.github.io/Font-Awesome/>
 
 
