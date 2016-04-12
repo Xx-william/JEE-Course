@@ -64,7 +64,7 @@ on GitHub.
 3. In the project, under the /ProjectFarm/WebContent/META-INF/context.xml, you need to change the setting of your own database.
 4. In the project, under the /ProjectFarm/WebContent/WEB-INF/web.xml, you need to change the path of the uploaded file.
 ```
-Now you are ready to go!!!
+Now you are good to go!!!
 
 License
 ----
