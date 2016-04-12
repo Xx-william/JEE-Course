@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ page import="javax.servlet.http.Cookie"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <html>
@@ -113,6 +114,16 @@
 							}
 				%>
 				<!-- IF user did not log in -->
+				<%
+				
+				Cookie[] cookies = request.getCookies();
+				String userEmail = "";
+				for(Cookie cookie : cookies){
+					if(cookie.getName().equals("Email")){
+						userEmail = cookie.getValue();
+					}
+				}
+				%>
 				<form class="navbar-form form-inline" method="post"
 					 data-toggle="validator"
 					 action="/ProjectFarm/controller/LogIn"
@@ -120,7 +131,7 @@
 					<div class="form-group" >
 						<label for="logAccount" class="control-label">E-mail</label> <input
 							type="email" class="form-control" id="logAccount"
-							placeholder="E-Mail" name="email" required>
+							placeholder="E-Mail" name="email" required value="<%=userEmail%>">
 					</div>
 					<div class="form-group">
 						<label for="password" class="control-label">Password</label> <input
