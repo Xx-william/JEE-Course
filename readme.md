@@ -5,8 +5,8 @@ Recently, we are having the JEE course, this is the project at the end of this c
 This project is called 'Project Farm', it is a quite simplified version of the [KickStarter] project, which aims at helping people to get funding for project ideas in several fields. [KickStarter] is a complex project and unfortunately, we do not have enough time to implememt all of its features. Thus, we propose a "lite" version, with a limited number of feateres.
 
 In our application, we have two types of users: 
-  - **Owners**: those who register project ideas in our system.
-  - **Evaluators**: those who evaluate project ideas. 
+- **Owners**: those who register project ideas in our system.
+- **Evaluators**: those who evaluate project ideas. 
 
 Modeling techniques related to users and roles are out-of-scope in this project, so, users with both roles are not allowed in this version.
 
@@ -34,27 +34,31 @@ The **Evaluator** chooses a project from the list and assigns a numeric value to
 ### Tech
 In this project, we will use
 
-* [JAVA] - 
-* [JAVA Servlet] - 
-* [JSP] - 
-* [HTML] - 
-* [JQuery] - 
-* [Ajax] - 
-* [BootStrap] -
+* [JAVA] 
+* [JAVA Servlet] 
+* [JSP] 
+* [HTML] 
+* [JQuery] 
+* [Ajax] 
+* [BootStrap] 
 
 And of course this project itself is open source with a [public repository]
- on GitHub.
+on GitHub.
 ### Environment
-
+* Eclipse Mars.1 Release(4.5.1)
+* MySql V 14.14 Distrib 5.7.11
+* Tomcat V 8.0
+* JAVA V 1.8
 
 ### Installation
 
 ```sh
-
+1. Import the project to Eclipse.
+2. Import the DataBase to MySQL.
+3. In the project, under the /ProjectFarm/WebContent/META-INF/context.xml, you need to change the setting of your own database.
+4. In the project, under the /ProjectFarm/WebContent/WEB-INF/web.xml, you need to change the path of the uploaded file.
 ```
-
-### Todos
-
+Now you are ready to go!!!
 
 License
 ----
@@ -62,17 +66,17 @@ License
 MIT
 
 
-   [KickStarter]: <https://www.kickstarter.com/>
-   [public repository]: <https://www.kickstarter.com/>
-   [JAVA]: <https://www.java.com/en/download/whatis_java.jsp>
-   [JAVA Servlet]: <http://www.oracle.com/technetwork/java/index-jsp-135475.html>
-   [JSP]: <http://www.oracle.com/technetwork/java/javaee/jsp/index.html>
-   [HTML]: <http://www.w3schools.com/tags/default.asp>
-   [JQuery]: <https://jquery.com/>
-   [Ajax]: <http://api.jquery.com/jquery.ajax/>
-   [BootStrap]: <http://getbootstrap.com/>
-  
-  
-  
+[KickStarter]: <https://www.kickstarter.com/>
+[public repository]: <https://github.com/Xx-william/JEE-Course>
+[JAVA]: <https://www.java.com/en/download/whatis_java.jsp>
+[JAVA Servlet]: <http://www.oracle.com/technetwork/java/index-jsp-135475.html>
+[JSP]: <http://www.oracle.com/technetwork/java/javaee/jsp/index.html>
+[HTML]: <http://www.w3schools.com/tags/default.asp>
+[JQuery]: <https://jquery.com/>
+[Ajax]: <http://api.jquery.com/jquery.ajax/>
+[BootStrap]: <http://getbootstrap.com/>
+
+
+
 
 
