@@ -20,8 +20,7 @@ public class DBUtil {
 
 	}
 
-	public static Connection getConnection() throws ClassNotFoundException,
-			SQLException, NamingException {
+	public static Connection getConnection() throws ClassNotFoundException, SQLException, NamingException {
 		return getDataSource().getConnection();
 	}
 

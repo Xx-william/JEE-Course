@@ -33,13 +33,13 @@ public class LogIn extends HttpServlet {
 			User user = UserDB.getUserWithPassword(email, password);
 			if (user instanceof Owner) {
 				setSession(req, email, user.getName(), "Owner", "true", password);
-				addCookies(resp,email);
+				addCookies(resp, email);
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/pages/ownerFrontPage.jsp");
 				dispatcher.forward(req, resp);
 
 			} else if (user instanceof Evaluator) {
 				setSession(req, email, user.getName(), "Evaluator", "true", password);
-				addCookies(resp,email);
+				addCookies(resp, email);
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/pages/evaluatorFrontPage.jsp");
 				dispatcher.forward(req, resp);
 			}
@@ -67,8 +67,9 @@ public class LogIn extends HttpServlet {
 		session.setAttribute("isLogIn", isLogIn);
 		session.setAttribute("password", password);
 	}
-	public void addCookies(HttpServletResponse resp,String email){
-		Cookie cookie = new Cookie("Email",email);
+
+	public void addCookies(HttpServletResponse resp, String email) {
+		Cookie cookie = new Cookie("Email", email);
 		cookie.setMaxAge(60 * 60 * 24 * 360); // 1 year
 		cookie.setPath("/ProjectFarm");
 		resp.addCookie(cookie);

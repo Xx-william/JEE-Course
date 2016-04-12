@@ -27,6 +27,11 @@ import model.db.DocumentDB;
 @WebServlet("/controller/UploadFile")
 @MultipartConfig
 public class UploadFile extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4585506017100707253L;
+
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		response.setContentType("application/json");
@@ -82,7 +87,6 @@ public class UploadFile extends HttpServlet {
 							System.out.println(e.getMessage());
 						}
 
-					
 						String outString = "{ \"isSuccess\" : \"true\"}";
 						out1.println(outString);
 

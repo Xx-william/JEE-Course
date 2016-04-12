@@ -16,21 +16,26 @@ import model.Project;
 import model.db.ProjectDB;
 
 @WebServlet("/controller/ListProjects")
-public class ListProjects extends HttpServlet{
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+public class ListProjects extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6939583898072280605L;
+
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ArrayList<Project> projects = new ArrayList<Project>();
 		projects = ProjectDB.getAllProjects();
-		
+
 		Gson gson = new Gson();
 		String json = gson.toJson(projects);
-		
+
 		req.setAttribute("projects", json);
-		
+
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/pages/listProjects.jsp");
 		dispatcher.forward(req, resp);
 	}
-	
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		doPost(req,resp);
+
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doPost(req, resp);
 	}
 }

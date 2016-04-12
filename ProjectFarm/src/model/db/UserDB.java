@@ -1,4 +1,5 @@
 package model.db;
+
 /**
  * @author WANG Xi
  * @version 1.0
@@ -20,22 +21,17 @@ public class UserDB {
 	private static String SEARCH_USER = "SELECT * FROM user WHERE user_Email = ?";
 	private static String ADDUSER = "INSERT INTO user(user_Name,user_Email,user_Password,user_Type) VALUES(?,?,?,?) ";
 	private static String GET_USERWITHPASS = "SELECT * FROM user WHERE user_Email = ? AND user_Password = ?";
-	// private static Map<String,User> users;
-	//
-	// static {
-	// users = new LinkedHashMap<String, User>();
-	// initializeUsersList();
-	// }
 
-   /**
-    * 
-    * @param email
-    * @param password
-    * @return
-    * @throws DatabaseAccessError
-    * @throws InvalidDataException
-    */
-	public static User getUserWithPassword(String email,String password) throws DatabaseAccessError,InvalidDataException{
+	/**
+	 * 
+	 * @param email
+	 * @param password
+	 * @return
+	 * @throws DatabaseAccessError
+	 * @throws InvalidDataException
+	 */
+	public static User getUserWithPassword(String email, String password)
+			throws DatabaseAccessError, InvalidDataException {
 		Connection conn = null;
 		try {
 			conn = DBUtil.getConnection();
@@ -44,15 +40,15 @@ public class UserDB {
 			stmt.setString(2, password);
 			ResultSet rs = stmt.executeQuery();
 
-			if (rs.next()) {				
+			if (rs.next()) {
 				String name = rs.getString("user_Name");
-				String type = rs.getString("user_Type");				
-				if(type.equals("Owner")){
-					Owner owner = new Owner(email,name,password);
-					return (Owner)owner;
-				}else{
-					Evaluator evaluator = new Evaluator(email,name,password);
-					return (Evaluator)evaluator;
+				String type = rs.getString("user_Type");
+				if (type.equals("Owner")) {
+					Owner owner = new Owner(email, name, password);
+					return (Owner) owner;
+				} else {
+					Evaluator evaluator = new Evaluator(email, name, password);
+					return (Evaluator) evaluator;
 				}
 			} else {
 				throw new InvalidDataException("User name or password not correct");
@@ -66,14 +62,14 @@ public class UserDB {
 				e.printStackTrace();
 			}
 		}
-		
-		
+
 	}
-	public static void addUser(User u) throws DatabaseAccessError,InvalidDataException {
+
+	public static void addUser(User u) throws DatabaseAccessError, InvalidDataException {
 		User user = getUser(u.getEmail());
-		if(user != null){
+		if (user != null) {
 			throw new InvalidDataException("This Email has already been used!");
-		}else{
+		} else {
 			Connection conn = null;
 			try {
 				conn = DBUtil.getConnection();
@@ -82,14 +78,14 @@ public class UserDB {
 				stmt.setString(1, u.getName());
 				stmt.setString(2, u.getEmail());
 				stmt.setString(3, u.getPassword());
-				if(u instanceof Owner){
+				if (u instanceof Owner) {
 					stmt.setString(4, "Owner");
-				}else if(u instanceof Evaluator){
+				} else if (u instanceof Evaluator) {
 					stmt.setString(4, "Evaluator");
-				}							
+				}
 				int result = stmt.executeUpdate();
-				
-			}catch (ClassNotFoundException | SQLException | NamingException e) {
+
+			} catch (ClassNotFoundException | SQLException | NamingException e) {
 				throw new DatabaseAccessError("erro when add owner", e);
 			} finally {
 				try {
@@ -102,9 +98,10 @@ public class UserDB {
 	}
 
 	/**
-	 *  @param login : user's email
-	 *  @return User : if user doesn't exist return null, otherwise return Owner
-	 *  or Evaluator
+	 * @param login
+	 *            : user's email
+	 * @return User : if user doesn't exist return null, otherwise return Owner
+	 *         or Evaluator
 	 */
 	public static User getUser(String login) throws DatabaseAccessError {
 		Connection conn = null;
@@ -120,13 +117,13 @@ public class UserDB {
 				String name = rs.getString("user_Name");
 				String password = rs.getString("user_Password");
 				String type = rs.getString("user_Type");
-				
-				if(type.equals("Owner")){
-					Owner owner = new Owner(email,name,password);
-					return (Owner)owner;
-				}else{
-					Evaluator evaluator = new Evaluator(email,name,password);
-					return (Evaluator)evaluator;
+
+				if (type.equals("Owner")) {
+					Owner owner = new Owner(email, name, password);
+					return (Owner) owner;
+				} else {
+					Evaluator evaluator = new Evaluator(email, name, password);
+					return (Evaluator) evaluator;
 				}
 			} else {
 				return null;
@@ -140,8 +137,7 @@ public class UserDB {
 				e.printStackTrace();
 			}
 		}
-		
-		
+
 	}
 
 	// private static void initializeUsersList() {

@@ -10,11 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/controller/Disconnect")
 public class Disconnect extends HttpServlet {
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2750267846811457967L;
+
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getSession().invalidate();
-		resp.sendRedirect(req.getContextPath()+"/index.jsp");
+		resp.sendRedirect(req.getContextPath() + "/index.jsp");
 	}
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		doPost(req,resp);
+
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doPost(req, resp);
 	}
 }

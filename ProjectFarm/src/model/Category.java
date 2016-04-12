@@ -3,15 +3,15 @@ package model;
 import java.io.Serializable;
 
 public class Category implements Serializable {
-	
+
 	private static final long serialVersionUID = 4954230693278879624L;
 
 	private String description;
-	
+
 	public Category(String description) {
 		setDescription(description);
 	}
-																				 
+
 	public String getDescription() {
 		return description;
 	}
@@ -24,8 +24,7 @@ public class Category implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		return result;
 	}
 

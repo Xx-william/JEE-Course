@@ -19,30 +19,33 @@ import model.db.ProjectDB;
 
 @WebServlet("/controller/MyProjects")
 public class MyProjects extends HttpServlet {
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 697084369146478332L;
+
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		String email = (String) session.getAttribute("email");
-		String name = (String)session.getAttribute("name");
-		String password = (String)session.getAttribute("password");
-		
-		Owner owner = new Owner(email,name,password);
-				
+		String name = (String) session.getAttribute("name");
+		String password = (String) session.getAttribute("password");
+
+		Owner owner = new Owner(email, name, password);
+
 		ArrayList<Project> projects = new ArrayList<Project>();
-		
-		
-		projects =  ProjectDB.getProjectsOfOwner(owner);
-		
-		
+
+		projects = ProjectDB.getProjectsOfOwner(owner);
+
 		Gson gson = new Gson();
 		String json = gson.toJson(projects);
 
 		req.setAttribute("projects", json);
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/pages/myProjects.jsp");
 		dispatcher.forward(req, resp);
-		
 
 	}
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		doPost(req,resp);
+
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doPost(req, resp);
 	}
 }

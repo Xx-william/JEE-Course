@@ -21,12 +21,6 @@ public class CategoryDB {
 	private static String GET_CATEGORY = "SELECT * FROM category WHERE category_description = ?";
 	private static Map<String, Category> categories;
 
-	// static {
-	// categories = new LinkedHashMap<>();
-	//
-	// initializeCategoryList();
-	// }
-
 	public static List<Category> getCategories() throws DatabaseAccessError, InvalidDataException {
 		categories = new LinkedHashMap<>();
 		Connection conn = null;
@@ -62,26 +56,25 @@ public class CategoryDB {
 	public static Category getCategory(String name) {
 		Category category = null;
 		Connection conn = null;
-				try{
-					conn = DBUtil.getConnection();
-					PreparedStatement stmt = conn.prepareStatement(GET_CATEGORY);
-					stmt.setString(1, name);
-					ResultSet rs = stmt.executeQuery();
-					while(rs.next()){
-						category = new Category(rs.getString("category_description"));
-					}
-					
-					
-				}catch(Exception e){
-					e.printStackTrace();
-				}finally {
-					try {
-						DBUtil.dropConnection(conn);
-					} catch (SQLException e) { /* ignored */
-						e.printStackTrace();
-					}
-				}
-				return category;
+		try {
+			conn = DBUtil.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(GET_CATEGORY);
+			stmt.setString(1, name);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				category = new Category(rs.getString("category_description"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				DBUtil.dropConnection(conn);
+			} catch (SQLException e) { /* ignored */
+				e.printStackTrace();
+			}
+		}
+		return category;
 	}
 
 	// private static void initializeCategoryList() throws DatabaseAccessError,

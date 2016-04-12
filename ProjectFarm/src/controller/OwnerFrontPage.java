@@ -17,29 +17,35 @@ import model.db.exception.DatabaseAccessError;
 import model.exception.InvalidDataException;
 
 @WebServlet("/controller/OwnerFrontPage")
-public class OwnerFrontPage extends HttpServlet{
+public class OwnerFrontPage extends HttpServlet {
 
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2600577093487240456L;
+
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			List<Category> categorys = CategoryDB.getCategories();
 
 			ArrayList<String> categoryNames = new ArrayList();
-			for(Category category: categorys){
+			for (Category category : categorys) {
 				String description = category.getDescription();
 				categoryNames.add(category.getDescription());
 			}
 			req.setAttribute("category", categoryNames);
-			
+
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/pages/newProject.jsp");
 			dispatcher.forward(req, resp);
 		} catch (DatabaseAccessError e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InvalidDataException e){
+		} catch (InvalidDataException e) {
 			e.printStackTrace();
 		}
 	}
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		doPost(req,resp);
+
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doPost(req, resp);
 	}
 }

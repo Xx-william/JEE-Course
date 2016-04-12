@@ -18,7 +18,7 @@ public class ProjectDB {
 	private static String GET_PROJECTSOFOWNER = "SELECT * FROM project WHERE project_owner = ?";
 	private static String GET_EVALUATIONS_IDS_OF_PROJECT = "SELECT evaluation_id FROM evaluation WHERE project_id = ?";
 	private static String GET_ALL_PROJECTS = "SELECT * FROM project";
-//	private static Map<String, Project> projects;
+	// private static Map<String, Project> projects;
 
 	// static {
 	// projects = new LinkedHashMap<String, Project>();
@@ -46,10 +46,10 @@ public class ProjectDB {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
-			try{
+		} finally {
+			try {
 				DBUtil.dropConnection(conn);
-			}catch (Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -64,7 +64,7 @@ public class ProjectDB {
 			PreparedStatement stmt = conn.prepareStatement(GET_PROJECT_BY_ID);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
-			
+
 			rs.next();
 			int projectId = rs.getInt("project_id");
 			String acronym = rs.getString("project_acronym");
@@ -74,25 +74,26 @@ public class ProjectDB {
 			String createdStr = rs.getString("project_created");
 			String ownerStr = rs.getString("project_owner");
 			String categoryName = rs.getString("project_category");
-		    
+
 			ArrayList<Document> documents = DocumentDB.getDocumentByProjectId(projectId);
 			ArrayList<Evaluation> evaluations = EvaluationDB.getEvalByProjID(projectId);
-			
-//			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-//			Date created = sdf.parse(createdStr);
-//			Owner owner = (Owner)UserDB.getUser(OwnerStr);
-//			Category category = CategoryDB.getCategory(categoryName);
-			
-			 project = new Project(projectId,acronym, description, fundingDuration, budget, ownerStr,  categoryName , createdStr);
-			 project.setEvaluations(evaluations);
-			 project.setDocuments(documents);
-			 
+
+			// SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+			// Date created = sdf.parse(createdStr);
+			// Owner owner = (Owner)UserDB.getUser(OwnerStr);
+			// Category category = CategoryDB.getCategory(categoryName);
+
+			project = new Project(projectId, acronym, description, fundingDuration, budget, ownerStr, categoryName,
+					createdStr);
+			project.setEvaluations(evaluations);
+			project.setDocuments(documents);
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
-			try{
+		} finally {
+			try {
 				DBUtil.dropConnection(conn);
-			}catch (Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -147,8 +148,8 @@ public class ProjectDB {
 			stmt.setString(1, owner.getEmail());
 
 			ResultSet rs = stmt.executeQuery();
-			while(rs.next()) {
-				int projectId = rs.getInt("project_id");				
+			while (rs.next()) {
+				int projectId = rs.getInt("project_id");
 				String title = rs.getString("project_acronym");
 				String description = rs.getString("project_description");
 				double budget = rs.getDouble("project_budget");
@@ -156,9 +157,10 @@ public class ProjectDB {
 				String category = rs.getString("project_category");
 				int fundingDuration = rs.getInt("project_fundingDuration");
 				String ownerEmail = owner.getEmail();
-				Project project = new Project( projectId, title, description, fundingDuration, budget,  ownerEmail,  category, created);
+				Project project = new Project(projectId, title, description, fundingDuration, budget, ownerEmail,
+						category, created);
 				project.setProjectId(rs.getInt("project_id"));
-				
+
 				ArrayList<Evaluation> evaluations = EvaluationDB.getEvalByProjID(projectId);
 				ArrayList<Document> documents = DocumentDB.getDocumentByProjectId(projectId);
 				project.setEvaluations(evaluations);
@@ -167,26 +169,26 @@ public class ProjectDB {
 			}
 		} catch (Exception e) {
 
-		}finally{
-			try{
+		} finally {
+			try {
 				DBUtil.dropConnection(conn);
-			}catch (Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		return projects;
 	}
 
-	public static ArrayList<Project> getAllProjects(){
+	public static ArrayList<Project> getAllProjects() {
 		ArrayList<Project> projects = new ArrayList<Project>();
 		Connection conn = null;
-		
-		try{
+
+		try {
 			conn = DBUtil.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(GET_ALL_PROJECTS);
-			ResultSet rs = stmt.executeQuery();			
-			while(rs.next()){				
-				int projectId = rs.getInt("project_id");				
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				int projectId = rs.getInt("project_id");
 				String title = rs.getString("project_acronym");
 				String description = rs.getString("project_description");
 				double budget = rs.getDouble("project_budget");
@@ -194,20 +196,21 @@ public class ProjectDB {
 				String category = rs.getString("project_category");
 				int fundingDuration = rs.getInt("project_fundingDuration");
 				String ownerEmail = rs.getString("project_owner");
-				Project project = new Project( projectId, title, description, fundingDuration, budget,  ownerEmail,  category, created);
-				project.setProjectId(rs.getInt("project_id"));				
+				Project project = new Project(projectId, title, description, fundingDuration, budget, ownerEmail,
+						category, created);
+				project.setProjectId(rs.getInt("project_id"));
 				ArrayList<Evaluation> evaluations = EvaluationDB.getEvalByProjID(projectId);
 				ArrayList<Document> documents = DocumentDB.getDocumentByProjectId(projectId);
 				project.setEvaluations(evaluations);
 				project.setDocuments(documents);
 				projects.add(project);
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
-			try{
+		} finally {
+			try {
 				DBUtil.dropConnection(conn);
-			}catch (Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

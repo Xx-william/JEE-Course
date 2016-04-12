@@ -31,8 +31,8 @@ public class Project implements Serializable {
 	private ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
 	private ArrayList<Document> documents = new ArrayList<Document>();
 
-	public Project(String acronym, String description, int fundingDuration,
-			double budget, Owner owner, Category category,Date created) throws InvalidDataException {	
+	public Project(String acronym, String description, int fundingDuration, double budget, Owner owner,
+			Category category, Date created) throws InvalidDataException {
 		setAcronym(acronym);
 		setDescription(description);
 		setFundingDuration(fundingDuration);
@@ -43,27 +43,28 @@ public class Project implements Serializable {
 		setCreated(created);
 	}
 
-	public Project(int projectId,String title,String description,int fundingDuration,double budget, String ownerEmail, String category,String dateStr){
-		
+	public Project(int projectId, String title, String description, int fundingDuration, double budget,
+			String ownerEmail, String category, String dateStr) {
+
 		Owner owner = null;
 		try {
-			owner = (Owner)UserDB.getUser(ownerEmail);
+			owner = (Owner) UserDB.getUser(ownerEmail);
 		} catch (DatabaseAccessError e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Category categoryP  = CategoryDB.getCategory(category);
-		
+		Category categoryP = CategoryDB.getCategory(category);
+
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		Date date = null;
-		
+
 		try {
 			date = sdf.parse(dateStr);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		try {
 			setProjectId(projectId);
 			setAcronym(title);
@@ -74,26 +75,27 @@ public class Project implements Serializable {
 			setOwner(owner);
 			setCategory(categoryP);
 			setCreated(created);
-			
+
 		} catch (InvalidDataException e) {
 			e.printStackTrace();
 		}
 	}
+
 	public void setDocuments(ArrayList<Document> documents) {
 		this.documents = documents;
 	}
 
 	public void setEvaluations(ArrayList<Evaluation> evaluations) {
-		if(!evaluations.isEmpty()){
+		if (!evaluations.isEmpty()) {
 			double temptRisk = 0;
 			double temptAttrac = 0;
-			for(Evaluation evaluation : evaluations){
+			for (Evaluation evaluation : evaluations) {
 				temptRisk += evaluation.getRiskLevel();
 				temptAttrac += evaluation.getAttractiveness();
 			}
 			setRisk(temptRisk / evaluations.size());
 			setAttractiveness(temptAttrac / evaluations.size());
-		}	
+		}
 		this.evaluations = evaluations;
 	}
 
@@ -102,7 +104,7 @@ public class Project implements Serializable {
 	}
 
 	public void setAcronym(String acronym) throws InvalidDataException {
-		if(acronym == null || acronym.trim().equals("")) {
+		if (acronym == null || acronym.trim().equals("")) {
 			throw new InvalidDataException("Acronym is mandatory");
 		}
 		this.acronym = acronym;
@@ -113,9 +115,9 @@ public class Project implements Serializable {
 	}
 
 	public void setDescription(String description) throws InvalidDataException {
-		if(description == null || description.trim().equals("")) {
+		if (description == null || description.trim().equals("")) {
 			throw new InvalidDataException("Description is mandatory");
-		}		
+		}
 		this.description = description;
 	}
 
@@ -124,9 +126,9 @@ public class Project implements Serializable {
 	}
 
 	public void setFundingDuration(int fundingDuration) throws InvalidDataException {
-		if(fundingDuration <= 0) {
+		if (fundingDuration <= 0) {
 			throw new InvalidDataException("Funding must be specified");
-		}				
+		}
 		this.fundingDuration = fundingDuration;
 	}
 
@@ -135,9 +137,9 @@ public class Project implements Serializable {
 	}
 
 	public void setBudget(double budget) throws InvalidDataException {
-		if(budget <= 0) {
+		if (budget <= 0) {
 			throw new InvalidDataException("budget must be specified");
-		}				
+		}
 		this.budget = budget;
 	}
 
@@ -154,9 +156,9 @@ public class Project implements Serializable {
 	}
 
 	public void setOwner(Owner owner) throws InvalidDataException {
-		if(owner == null) {
+		if (owner == null) {
 			throw new InvalidDataException("Project must have an owner");
-		}				
+		}
 		this.owner = owner;
 	}
 
@@ -165,47 +167,53 @@ public class Project implements Serializable {
 	}
 
 	public void setCategory(Category category) throws InvalidDataException {
-		if(category == null) {
+		if (category == null) {
 			throw new InvalidDataException("Project must have a category");
-		}				
+		}
 		this.category = category;
 	}
 
 	public void addEvaluation(Evaluation eval) {
 		double temptRisk = eval.getRiskLevel();
-		double temptAttrac = eval.getAttractiveness();		
+		double temptAttrac = eval.getAttractiveness();
 		setRisk((this.risk + temptRisk) / 2);
 		setAttractiveness((this.attractiveness + temptAttrac) / 2);
-		evaluations.add(eval);		
+		evaluations.add(eval);
 	}
 
 	public ArrayList<Evaluation> getEvaluations() {
 		return evaluations;
 	}
-	
+
 	public void addDocument(Document doc) {
 		documents.add(doc);
 	}
-	
+
 	public ArrayList<Document> getDocuments() {
 		return documents;
 	}
-	public void setProjectId(int projectId){
+
+	public void setProjectId(int projectId) {
 		this.projectId = projectId;
 	}
-	public int getProjectId(){
+
+	public int getProjectId() {
 		return this.projectId;
 	}
-	public double getRisk(){
+
+	public double getRisk() {
 		return this.risk;
 	}
-	public double getAttractiveness(){
+
+	public double getAttractiveness() {
 		return this.attractiveness;
 	}
-	private void setRisk(double risk){
+
+	private void setRisk(double risk) {
 		this.risk = risk;
 	}
-	private void setAttractiveness(double attractiveness){
+
+	private void setAttractiveness(double attractiveness) {
 		this.attractiveness = attractiveness;
 	}
 }

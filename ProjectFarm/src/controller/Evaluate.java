@@ -21,23 +21,29 @@ import model.db.EvaluationDB;
 import model.db.ProjectDB;
 
 @WebServlet("/controller/Evaluate")
-public class Evaluate extends HttpServlet{
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-	doGet(req,resp);
+public class Evaluate extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1119057336789879153L;
+
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
 	}
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/pages/evaluate.jsp");
-		String projectIdStr =(String) req.getParameter("projectId");	
-		
+		String projectIdStr = (String) req.getParameter("projectId");
+
 		int projectId = Integer.parseInt(projectIdStr);
-		Project project = ProjectDB.getProject(projectId);			
+		Project project = ProjectDB.getProject(projectId);
 		ArrayList<Document> documents = DocumentDB.getDocumentByProjectId(projectId);
 		project.setDocuments(documents);
 		ArrayList<Evaluation> evaluations = EvaluationDB.getEvalByProjID(projectId);
 		project.setEvaluations(evaluations);
-			
+
 		Gson gson = new Gson();
-		String json = gson.toJson(project);		
+		String json = gson.toJson(project);
 		req.setAttribute("project", json);
 		dispatcher.forward(req, resp);
 	}

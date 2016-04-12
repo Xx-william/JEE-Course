@@ -19,9 +19,14 @@ import model.db.ProjectDB;
 import model.db.UserDB;
 
 @WebServlet("/controller/NewProject")
-public class NewProject extends HttpServlet{
-	
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+public class NewProject extends HttpServlet {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6660822334125504767L;
+
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		String title = req.getParameter("title");
 		String description = req.getParameter("description");
@@ -29,29 +34,29 @@ public class NewProject extends HttpServlet{
 		String incubationStr = req.getParameter("incubation");
 		String budgetStr = req.getParameter("budget");
 		HttpSession session = req.getSession();
-		
 
-		try{
+		try {
 			int incubation = Integer.parseInt(incubationStr);
 			double budget = Double.parseDouble(budgetStr);
-			Owner owner = (Owner) UserDB.getUser((String)session.getAttribute("email"));
+			Owner owner = (Owner) UserDB.getUser((String) session.getAttribute("email"));
 			Category category = CategoryDB.getCategory(categoryStr);
 			Date date = new Date();
-			Project project = new Project(title,description,incubation,budget,owner,category,date);
-	        
+			Project project = new Project(title, description, incubation, budget, owner, category, date);
+
 			ProjectDB.saveProject(project);
-			
-		}catch(Exception e){
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		resp.setContentType("application/json");
 		PrintWriter out = resp.getWriter();
 		String outString = "{ \"isSuccess\" : \"true\"}";
 		out.println(outString);
 	}
-	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		doPost(req,resp);
+
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doPost(req, resp);
 	}
 
 }

@@ -13,8 +13,8 @@ public class Evaluation implements Serializable {
 	private int attractiveness;
 	private int riskLevel;
 
-	public Evaluation(int projectId,Evaluator evaluator, int attractiveness,
-			int riskLevel) throws InvalidDataException {
+	public Evaluation(int projectId, Evaluator evaluator, int attractiveness, int riskLevel)
+			throws InvalidDataException {
 		setProjectId(projectId);
 		setEvaluator(evaluator);
 		setAttractiveness(attractiveness);
@@ -34,7 +34,7 @@ public class Evaluation implements Serializable {
 	}
 
 	public void setEvaluator(Evaluator evaluator) throws InvalidDataException {
-		if(evaluator == null) {
+		if (evaluator == null) {
 			throw new InvalidDataException("Evaluator must be specified");
 		}
 		this.evaluator = evaluator;
@@ -45,9 +45,9 @@ public class Evaluation implements Serializable {
 	}
 
 	public void setAttractiveness(int attractiveness) throws InvalidDataException {
-		if(attractiveness < 1 || attractiveness > 5) {
+		if (attractiveness < 1 || attractiveness > 5) {
 			throw new InvalidDataException("Attractiveness must range between 1 and 5");
-		}		
+		}
 		this.attractiveness = attractiveness;
 	}
 
@@ -56,9 +56,9 @@ public class Evaluation implements Serializable {
 	}
 
 	public void setRiskLevel(int riskLevel) throws InvalidDataException {
-		if(riskLevel < 1 || riskLevel > 5) {
+		if (riskLevel < 1 || riskLevel > 5) {
 			throw new InvalidDataException("Risk level must range between 1 and 5");
-		}		
+		}
 		this.riskLevel = riskLevel;
 	}
 

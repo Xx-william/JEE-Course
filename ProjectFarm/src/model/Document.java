@@ -13,49 +13,54 @@ public class Document implements Serializable {
 	private int projectId;
 	private String documentPath;
 	private Date added;
-	
-	public Document(String documentPath,int projectId) throws InvalidDataException {
+
+	public Document(String documentPath, int projectId) throws InvalidDataException {
 		setDocumentPath(documentPath);
 		setAdded(new Date());
 		setProjectId(projectId);
 	}
 
-	public void setDocumentId(int id){
+	public void setDocumentId(int id) {
 		this.documentId = id;
 	}
-	public int getDocumentId(){
+
+	public int getDocumentId() {
 		return this.documentId;
 	}
-	public void setProjectId(int projectId){
+
+	public void setProjectId(int projectId) {
 		this.projectId = projectId;
 	}
-	public int getProjectId(){
+
+	public int getProjectId() {
 		return this.projectId;
 	}
+
 	public String getDocumentPath() {
 		return documentPath;
 	}
 
-	public String getDocumentName(){
+	public String getDocumentName() {
 		String[] filenames = documentPath.split("/");
 		String filename = "";
-		for(String filenametempt : filenames){
+		for (String filenametempt : filenames) {
 			filename = filenametempt;
 		}
-	
+
 		return filename;
 	}
+
 	public void setDocumentPath(String documentPath) throws InvalidDataException {
 		File file = new File(documentPath);
-		
-		if(!file.exists()) {
+
+		if (!file.exists()) {
 			throw new InvalidDataException("File " + documentPath + " does not exists");
 		}
-		
-		if(!file.isFile()) {
+
+		if (!file.isFile()) {
 			throw new InvalidDataException("Path " + documentPath + " does not point to a file");
 		}
-		
+
 		this.documentPath = documentPath;
 	}
 
