@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import model.Document;
-import model.EvaluatePage;
 import model.Evaluation;
 import model.Project;
 import model.db.DocumentDB;

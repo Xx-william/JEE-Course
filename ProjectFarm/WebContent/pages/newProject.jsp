@@ -95,6 +95,7 @@
         	document.getElementById("newProjectForm").reset();
         });
           $('#newProjectForm').validator().on('submit',function(e) {
+        	  $("#ajaxResponse").empty();
             if (e.isDefaultPrevented()) {
               // handle the invalid form...
             } else {

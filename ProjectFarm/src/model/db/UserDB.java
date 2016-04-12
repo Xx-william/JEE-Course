@@ -83,7 +83,7 @@ public class UserDB {
 				} else if (u instanceof Evaluator) {
 					stmt.setString(4, "Evaluator");
 				}
-				int result = stmt.executeUpdate();
+				stmt.executeUpdate();
 
 			} catch (ClassNotFoundException | SQLException | NamingException e) {
 				throw new DatabaseAccessError("erro when add owner", e);

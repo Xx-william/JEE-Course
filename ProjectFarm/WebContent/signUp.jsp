@@ -55,6 +55,7 @@
 				<div id="ajaxResponse"></div>
 				<script>
 				$('#signUpForm').validator().on('submit', function (e) {
+					$("#ajaxResponse").empty();
 					  if (e.isDefaultPrevented()) {
 					    // handle the invalid form...
 					  } else {
@@ -67,10 +68,12 @@
 									$("#ajaxResponse").append("<div class='alert alert-danger' role='alert'>"
 										+ data.errorMessage + "</div>");
 								} else if (data.isSuccess == "true") {
+									
 									$("#ajaxResponse").append("<div class='alert alert-success' role='alert'>Welcome to Project Farm</div>");
 									}
 								},
 								error : function() {
+									
 										$("#ajaxResponse").append("<h1>fails</h1>");
 										}
 							});

@@ -28,17 +28,16 @@ public class OwnerFrontPage extends HttpServlet {
 		try {
 			List<Category> categorys = CategoryDB.getCategories();
 
-			ArrayList<String> categoryNames = new ArrayList();
+			ArrayList<String> categoryNames = new ArrayList<String>();
 			for (Category category : categorys) {
 				String description = category.getDescription();
-				categoryNames.add(category.getDescription());
+				categoryNames.add(description);
 			}
 			req.setAttribute("category", categoryNames);
 
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/pages/newProject.jsp");
 			dispatcher.forward(req, resp);
 		} catch (DatabaseAccessError e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidDataException e) {
 			e.printStackTrace();

@@ -16,13 +16,7 @@ public class ProjectDB {
 	private static String SAVE_PROJECT = "INSERT INTO project(project_description,project_fundingDuration,project_budget,project_created,project_owner,project_category,project_acronym) values(?,?,?,?,?,?,?)";
 	private static String GET_PROJECT_BY_ID = "SELECT * FROM project WHERE project_id = ?";
 	private static String GET_PROJECTSOFOWNER = "SELECT * FROM project WHERE project_owner = ?";
-	private static String GET_EVALUATIONS_IDS_OF_PROJECT = "SELECT evaluation_id FROM evaluation WHERE project_id = ?";
 	private static String GET_ALL_PROJECTS = "SELECT * FROM project";
-	// private static Map<String, Project> projects;
-
-	// static {
-	// projects = new LinkedHashMap<String, Project>();
-	// }
 
 	public static void saveProject(Project project) throws DatabaseAccessError {
 

@@ -5,11 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import model.db.CategoryDB;
-import model.db.DocumentDB;
-import model.db.EvaluationDB;
 import model.db.UserDB;
 import model.db.exception.DatabaseAccessError;
 import model.exception.InvalidDataException;
@@ -50,18 +47,18 @@ public class Project implements Serializable {
 		try {
 			owner = (Owner) UserDB.getUser(ownerEmail);
 		} catch (DatabaseAccessError e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Category categoryP = CategoryDB.getCategory(category);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		
+		@SuppressWarnings("unused")
 		Date date = null;
 
 		try {
 			date = sdf.parse(dateStr);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

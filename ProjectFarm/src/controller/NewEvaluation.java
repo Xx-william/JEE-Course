@@ -10,10 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.Evaluation;
-import model.Evaluator;
 import model.db.EvaluationDB;
-import model.db.UserDB;
 
 @WebServlet("/controller/NewEvaluation")
 public class NewEvaluation extends HttpServlet {

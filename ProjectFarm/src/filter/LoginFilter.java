@@ -34,15 +34,7 @@ public class LoginFilter implements Filter {
 		// get email from session
 		String email = (String) session.getAttribute("email");
 
-		/*
-		 * 创建类Constants.java，里面写的是无需过滤的页面 for (int i = 0; i <
-		 * Constants.NoFilter_Pages.length; i++) {
-		 * 
-		 * if (path.indexOf(Constants.NoFilter_Pages[i]) > -1) {
-		 * chain.doFilter(servletRequest, servletResponse); return; } }
-		 */
-
-		// 登陆页面无需过滤
+		// the pages no need filter
 		if (path.indexOf("/index.jsp") > -1) {
 			chain.doFilter(servletRequest, servletResponse);
 			return;
@@ -52,12 +44,13 @@ public class LoginFilter implements Filter {
 			return;
 		}
 
-		// 判断如果没有取到员工信息,就跳转到登陆页面
+		// if we don't get the information of the login we redirect to the
+		// index.jsp
 		if (email == null || "".equals(email)) {
-			// 跳转到登陆页面
+
 			servletResponse.sendRedirect("../index.jsp");
 		} else {
-			// 已经登陆,继续此次请求
+			// user already logded in
 			chain.doFilter(req, resp);
 		}
 

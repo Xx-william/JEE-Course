@@ -3,7 +3,6 @@ package controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.servlet.ServletContext;
@@ -34,7 +33,7 @@ public class getDocument extends HttpServlet {
 
 		Document document = DocumentDB.getDocumentById(documentId);
 
-		String documentName = document.getDocumentName();
+		//String documentName = document.getDocumentName();
 		File file = new File(document.getDocumentPath());
 
 		FileInputStream inStream = new FileInputStream(file);

@@ -91,6 +91,7 @@
 						<!--  Owner : END -->
 						<script>
 					$('#upload').validator().on('submit', function (e) {
+						$("#uploadResponse").empty();
 						var formData = new FormData();
 						var file = document.getElementById("file").files[0];
 						var fileName =file.name;
@@ -109,11 +110,11 @@
 									    contentType: false,							
 									success : function(data) {
 									if (data.isSuccess == "false") {
-										$("#uploadResponse").empty();
+										
 										$("#uploadResponse").append("<div class='alert alert-danger' role='alert'>"
 											+ data.errorMessage + "</div>");
 									} else if (data.isSuccess == "true") {
-										$("#uploadResponse").empty();
+										
 										$("#uploadResponse").append("<div class='alert alert-success' role='alert'>Your document has been uploaded,if your want to download this file, please refresh this page</div>");
 										
 										$("#documents").append("<h4>"+fileName+" </h4>");
@@ -122,7 +123,7 @@
 									
 									},
 									error : function() {
-										$("#uploadResponse").empty();
+										
 											$("#uploadResponse").append("<h1>fails</h1>");
 											}
 								});
@@ -171,6 +172,7 @@
 						<script>
 						
 						$('#optionForm').validator().on('submit', function (e) {
+							$("#ajaxResponse").empty();
 							  if (e.isDefaultPrevented()) {
 							    // handle the invalid form...
 							  } else {
@@ -184,16 +186,16 @@
 										},									
 										success : function(data) {
 										if (data.isSuccess == "false") {
-											$("#ajaxResponse").empty();
+											
 											$("#ajaxResponse").append("<div class='alert alert-danger' role='alert'>"
 												+ data.errorMessage + "</div>");
 										} else if (data.isSuccess == "true") {
-											$("#ajaxResponse").empty();
+											
 											$("#ajaxResponse").append("<div class='alert alert-success' role='alert'>Your evaluation has been saved</div>");
 											}
 										},
 										error : function() {
-											$("#ajaxResponse").empty();
+											
 												$("#ajaxResponse").append("<h1>fails</h1>");
 												}
 									});

@@ -27,14 +27,13 @@ public class SignUp extends HttpServlet {
 		String email = req.getParameter("email");
 		String name = req.getParameter("userName");
 		String password = req.getParameter("password");
-		String passwordVerify = req.getParameter("passwordVerify");
+		String passwordV  = req.getParameter("passwordVerify");
 		String type = req.getParameter("optradio");
-
-		// TODO: verify if the two passwords are the same
-
+		
 		if (type.equals("Owner")) {
 			Owner owner = new Owner(email, name, password);
 			try {
+				verifyPassword(password,passwordV);
 				UserDB.addUser(owner);
 				resp.setContentType("application/json");
 				PrintWriter out = resp.getWriter();
@@ -54,6 +53,7 @@ public class SignUp extends HttpServlet {
 		} else {
 			Evaluator evaluator = new Evaluator(email, name, password);
 			try {
+				verifyPassword(password,passwordV);
 				UserDB.addUser(evaluator);
 				resp.setContentType("application/json");
 				PrintWriter out = resp.getWriter();
@@ -71,5 +71,12 @@ public class SignUp extends HttpServlet {
 			}
 		}
 
+	}
+	
+	private void verifyPassword(String pass1,String pass2) throws InvalidDataException{
+		if(!pass1.equals(pass2)){
+			throw new InvalidDataException("Two passwords are not the same!");
+		}
+		
 	}
 }

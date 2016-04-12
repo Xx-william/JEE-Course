@@ -44,7 +44,6 @@ public class LogIn extends HttpServlet {
 				dispatcher.forward(req, resp);
 			}
 		} catch (DatabaseAccessError e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidDataException e) {// user name or password not correct
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
