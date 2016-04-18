@@ -40,9 +40,10 @@ public class NewProject extends HttpServlet {
 			double budget = Double.parseDouble(budgetStr);
 			Owner owner = (Owner) UserDB.getUser((String) session.getAttribute("email"));
 			Category category = CategoryDB.getCategory(categoryStr);
-			Date date = new Date();
-			Project project = new Project(title, description, incubation, budget, owner, category, date);
-
+			//Date date = new Date();
+			//Project project = new Project(title, description, incubation, budget, owner, category, date);
+			Project project = new Project(title,description, incubation, budget, owner, category);
+			
 			ProjectDB.saveProject(project);
 
 		} catch (Exception e) {

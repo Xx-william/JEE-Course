@@ -28,16 +28,18 @@ public class Project implements Serializable {
 	private ArrayList<Evaluation> evaluations = new ArrayList<Evaluation>();
 	private ArrayList<Document> documents = new ArrayList<Document>();
 
+	//, Date created
+	
 	public Project(String acronym, String description, int fundingDuration, double budget, Owner owner,
-			Category category, Date created) throws InvalidDataException {
+			Category category) throws InvalidDataException {
 		setAcronym(acronym);
 		setDescription(description);
 		setFundingDuration(fundingDuration);
 		setBudget(budget);
-		setCreated(new Date());
+		setCreated();
 		setOwner(owner);
 		setCategory(category);
-		setCreated(created);
+		//setCreated(created);
 	}
 
 	public Project(int projectId, String title, String description, int fundingDuration, double budget,
@@ -68,10 +70,10 @@ public class Project implements Serializable {
 			setDescription(description);
 			setFundingDuration(fundingDuration);
 			setBudget(budget);
-			setCreated(new Date());
+			setCreated();
 			setOwner(owner);
 			setCategory(categoryP);
-			setCreated(created);
+			
 
 		} catch (InvalidDataException e) {
 			e.printStackTrace();
@@ -144,8 +146,9 @@ public class Project implements Serializable {
 		return created;
 	}
 
-	public void setCreated(Date created) {
-		this.created = created;
+	public void setCreated() {
+		Date date = new Date();
+		this.created = date;
 	}
 
 	public User getOwner() {

@@ -47,7 +47,6 @@ public class ProjectDB {
 				e.printStackTrace();
 			}
 		}
-		// projects.put(project.getAcronym(), project);
 	}
 
 	public static Project getProject(int id) {
@@ -72,11 +71,6 @@ public class ProjectDB {
 			ArrayList<Document> documents = DocumentDB.getDocumentByProjectId(projectId);
 			ArrayList<Evaluation> evaluations = EvaluationDB.getEvalByProjID(projectId);
 
-			// SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-			// Date created = sdf.parse(createdStr);
-			// Owner owner = (Owner)UserDB.getUser(OwnerStr);
-			// Category category = CategoryDB.getCategory(categoryName);
-
 			project = new Project(projectId, acronym, description, fundingDuration, budget, ownerStr, categoryName,
 					createdStr);
 			project.setEvaluations(evaluations);
@@ -93,45 +87,6 @@ public class ProjectDB {
 		}
 		return project;
 	}
-	// public static Project getProject(String acronym) throws
-	// DatabaseAccessError,InvalidDataException {
-	// Connection conn = null;
-	// try {
-	// conn = DBUtil.getConnection();
-	// PreparedStatement stmt = conn.prepareStatement(GET_PROJECT);
-	// stmt.setString(1, acronym);
-	// ResultSet rs = stmt.executeQuery();
-	// if(rs.next()){
-	// String title = rs.getString("project_acronym");
-	// String description = rs.getString("project_description");
-	// double budget = rs.getDouble("project_budget");
-	// String created = rs.getString("project_created");
-	// String ownerEmail = rs.getString("project_owner");
-	// String categoryStr = rs.getString("project_category");
-	// int fundingDuration = rs.getInt("project_fundingDuration");
-	//
-	// Owner owner = (Owner)UserDB.getUser(ownerEmail);
-	// Category category = CategoryDB.getCategory(categoryStr);
-	//
-	//
-	// SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-	// Date date = sdf.parse(created);
-	//
-	// Project project = new Project(title,description,fundingDuration,
-	// budget,owner,category,date);
-	//
-	// return project;
-	// }else{
-	// throw new InvalidDataException("There is no project called" + acronym);
-	// }
-	//
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	//
-	//
-	// return projects.get(acronym);
-	// }
 
 	public static ArrayList<Project> getProjectsOfOwner(Owner owner) {
 		ArrayList<Project> projects = new ArrayList<Project>();
